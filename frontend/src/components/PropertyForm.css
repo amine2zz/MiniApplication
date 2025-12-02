@@ -1,0 +1,142 @@
+.property-form-container {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 32px;
+  margin: 20px 0;
+  border: 1px solid #e7f6ff;
+}
+
+.property-form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 32px 0;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-label {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #364151;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #d1dae5;
+  border-radius: 8px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  color: #364151;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #0085ff;
+  box-shadow: 0 0 0 3px rgba(0, 133, 255, 0.1);
+}
+
+.form-input.error {
+  border-color: #ef4444;
+}
+
+.form-input::placeholder {
+  color: #9ca3af;
+}
+
+.error-message {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: #ef4444;
+  margin-top: 4px;
+  display: block;
+}
+
+.form-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-top: 32px;
+}
+
+.btn {
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  min-width: 120px;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-cancel {
+  background-color: transparent;
+  color: #364151;
+  border: 2px solid #d1dae5;
+}
+
+.btn-cancel:hover:not(:disabled) {
+  background-color: #f8fafc;
+  border-color: #364151;
+}
+
+.btn-submit {
+  background-color: #0085ff;
+  color: #ffffff;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #3ea2ff;
+  transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+  .property-form-container {
+    padding: 20px;
+    margin: 10px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}

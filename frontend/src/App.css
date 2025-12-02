@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: #f9fafb;
+  color: #364151;
+  line-height: 1.6;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+/* Variables CSS inspirées du design CFP */
+:root {
+  --primary-color: #0085ff;
+  --primary-light: #3ea2ff;
+  --primary-dark: #0f172a;
+  --secondary-color: #364151;
+  --accent-color: #e7f6ff;
+  --background-light: #f9fafb;
+  --white: #ffffff;
+  --border-color: #d1dae5;
+  --text-primary: #0f172a;
+  --text-secondary: #364151;
+  --text-muted: #9ca3af;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+}
+
+/* Styles globaux */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+p {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+button {
+  font-family: 'Poppins', sans-serif;
+}
+
+input, textarea, select {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+.slide-in {
+  animation: slideIn 0.4s ease-out;
+}
+
+/* Scrollbar personnalisée */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
