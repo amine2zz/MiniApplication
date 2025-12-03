@@ -23,6 +23,41 @@ class PropertyService {
       city: 'Marseille',
       price: 180000,
       surface: 35
+    },
+    {
+      id: '4',
+      title: 'Villa avec piscine',
+      city: 'Nice',
+      price: 850000,
+      surface: 200
+    },
+    {
+      id: '5',
+      title: 'Loft industriel',
+      city: 'Bordeaux',
+      price: 280000,
+      surface: 90
+    },
+    {
+      id: '6',
+      title: 'Duplex avec terrasse',
+      city: 'Toulouse',
+      price: 380000,
+      surface: 110
+    },
+    {
+      id: '7',
+      title: 'Penthouse vue mer',
+      city: 'Cannes',
+      price: 1200000,
+      surface: 150
+    },
+    {
+      id: '8',
+      title: 'Maison de ville',
+      city: 'Lille',
+      price: 250000,
+      surface: 95
     }
   ];
 

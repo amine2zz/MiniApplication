@@ -6,9 +6,22 @@ interface PropertyCardProps {
   property: Property;
   onView: (id: string) => void;
   onEdit: (id: string) => void;
+  language: 'fr' | 'en';
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit }) => {
+const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, language }) => {
+  const texts = {
+    fr: {
+      view: 'Voir',
+      edit: 'Modifier'
+    },
+    en: {
+      view: 'View',
+      edit: 'Edit'
+    }
+  };
+
+  const t = texts[language];
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
@@ -31,13 +44,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit })
             className="btn btn-primary" 
             onClick={() => onView(property.id)}
           >
-            Voir
+            {t.view}
           </button>
           <button 
             className="btn btn-secondary" 
             onClick={() => onEdit(property.id)}
           >
-            Modifier
+            {t.edit}
           </button>
         </div>
       </div>

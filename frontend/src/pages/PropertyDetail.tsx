@@ -4,17 +4,51 @@ import { Property } from '../types/Property';
 import { propertyApi } from '../services/api';
 import './PropertyDetail.css';
 
-const PropertyDetail: React.FC = () => {
+interface PropertyDetailProps {
+  language: 'fr' | 'en';
+}
+
+const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  const texts = {
+    fr: {
+      back: '← Retour à la liste',
+      detail: 'Détail de la propriété',
+      location: 'Localisation',
+      price: 'Prix',
+      surface: 'Surface',
+      pricePerM2: 'Prix au m²',
+      edit: 'Modifier cette propriété',
+      loading: 'Chargement de la propriété...',
+      notFound: 'Propriété non trouvée',
+      backToList: 'Retour à la liste'
+    },
+    en: {
+      back: '← Back to list',
+      detail: 'Property details',
+      location: 'Location',
+      price: 'Price',
+      surface: 'Surface',
+      pricePerM2: 'Price per m²',
+      edit: 'Edit this property',
+      loading: 'Loading property...',
+      notFound: 'Property not found',
+      backToList: 'Back to list'
+    }
+  };
+
+  const t = texts[language];
+
   useEffect(() => {
     if (id) {
       loadProperty(id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const loadProperty = async (propertyId: string) => {
@@ -24,7 +58,7 @@ const PropertyDetail: React.FC = () => {
       const data = await propertyApi.getById(propertyId);
       setProperty(data);
     } catch (err) {
-      setError('Propriété non trouvée');
+      setError(t.notFound);
       console.error('Error loading property:', err);
     } finally {
       setLoading(false);
@@ -52,7 +86,7 @@ const PropertyDetail: React.FC = () => {
       <div className="property-detail-container">
         <div className="loading">
           <div className="loading-spinner"></div>
-          <p>Chargement de la propriété...</p>
+          <p>{t.loading}</p>
         </div>
       </div>
     );
@@ -63,10 +97,10 @@ const PropertyDetail: React.FC = () => {
       <div className="property-detail-container">
         <div className="error">
           <div className="error-icon">❌</div>
-          <h2>Propriété non trouvée</h2>
+          <h2>{t.notFound}</h2>
           <p>{error}</p>
           <button onClick={handleBack} className="btn btn-primary">
-            Retour à la liste
+            {t.backToList}
           </button>
         </div>
       </div>
@@ -77,14 +111,14 @@ const PropertyDetail: React.FC = () => {
     <div className="property-detail-container">
       <div className="property-detail-header">
         <button onClick={handleBack} className="btn-back">
-          ← Retour à la liste
+          {t.back}
         </button>
       </div>
 
       <div className="property-detail-card">
         <div className="property-detail-content">
           <div className="property-header">
-            <div className="property-badge">Détail de la propriété</div>
+            <div className="property-badge">{t.detail}</div>
             <h1 className="property-title">{property.title}</h1>
           </div>
 
@@ -92,7 +126,7 @@ const PropertyDetail: React.FC = () => {
             <div className="info-item">
               <div className="info-icon">📍</div>
               <div className="info-content">
-                <span className="info-label">Localisation</span>
+                <span className="info-label">{t.location}</span>
                 <span className="info-value">{property.city}</span>
               </div>
             </div>
@@ -100,7 +134,7 @@ const PropertyDetail: React.FC = () => {
             <div className="info-item">
               <div className="info-icon">💰</div>
               <div className="info-content">
-                <span className="info-label">Prix</span>
+                <span className="info-label">{t.price}</span>
                 <span className="info-value price">{formatPrice(property.price)}</span>
               </div>
             </div>
@@ -108,7 +142,7 @@ const PropertyDetail: React.FC = () => {
             <div className="info-item">
               <div className="info-icon">📐</div>
               <div className="info-content">
-                <span className="info-label">Surface</span>
+                <span className="info-label">{t.surface}</span>
                 <span className="info-value">{property.surface} m²</span>
               </div>
             </div>
@@ -116,7 +150,7 @@ const PropertyDetail: React.FC = () => {
             <div className="info-item">
               <div className="info-icon">📊</div>
               <div className="info-content">
-                <span className="info-label">Prix au m²</span>
+                <span className="info-label">{t.pricePerM2}</span>
                 <span className="info-value">
                   {formatPrice(Math.round(property.price / property.surface))} / m²
                 </span>
@@ -126,7 +160,7 @@ const PropertyDetail: React.FC = () => {
 
           <div className="property-actions">
             <button onClick={handleEdit} className="btn btn-primary">
-              Modifier cette propriété
+              {t.edit}
             </button>
           </div>
         </div>

@@ -5,7 +5,11 @@ import { propertyApi } from '../services/api';
 import PropertyForm from '../components/PropertyForm';
 import './PropertyFormPage.css';
 
-const PropertyFormPage: React.FC = () => {
+interface PropertyFormPageProps {
+  language: 'fr' | 'en';
+}
+
+const PropertyFormPage: React.FC<PropertyFormPageProps> = ({ language }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [property, setProperty] = useState<Property | null>(null);
@@ -13,12 +17,46 @@ const PropertyFormPage: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const texts = {
+    fr: {
+      back: '← Retour à la liste',
+      modification: 'Modification',
+      newProperty: 'Nouvelle propriété',
+      editProperty: 'Modifier la propriété',
+      addProperty: 'Ajouter une nouvelle propriété',
+      editDesc: 'Modifiez les informations de cette propriété',
+      addDesc: 'Remplissez les informations pour ajouter une nouvelle propriété',
+      loading: 'Chargement...',
+      error: 'Erreur',
+      backToList: 'Retour à la liste',
+      saveError: 'Erreur lors de l\'enregistrement',
+      notFound: 'Propriété non trouvée'
+    },
+    en: {
+      back: '← Back to list',
+      modification: 'Modification',
+      newProperty: 'New property',
+      editProperty: 'Edit property',
+      addProperty: 'Add new property',
+      editDesc: 'Edit the information of this property',
+      addDesc: 'Fill in the information to add a new property',
+      loading: 'Loading...',
+      error: 'Error',
+      backToList: 'Back to list',
+      saveError: 'Error saving',
+      notFound: 'Property not found'
+    }
+  };
+
+  const t = texts[language];
+
   const isEditing = id && id !== 'new';
 
   useEffect(() => {
     if (isEditing) {
       loadProperty(id);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, isEditing]);
 
   const loadProperty = async (propertyId: string) => {
@@ -28,7 +66,7 @@ const PropertyFormPage: React.FC = () => {
       const data = await propertyApi.getById(propertyId);
       setProperty(data);
     } catch (err) {
-      setError('Propriété non trouvée');
+      setError(t.notFound);
       console.error('Error loading property:', err);
     } finally {
       setLoading(false);
@@ -48,7 +86,7 @@ const PropertyFormPage: React.FC = () => {
 
       navigate('/');
     } catch (err) {
-      setError('Erreur lors de l\'enregistrement');
+      setError(t.saveError);
       console.error('Error saving property:', err);
     } finally {
       setSubmitting(false);
@@ -64,7 +102,7 @@ const PropertyFormPage: React.FC = () => {
       <div className="property-form-page-container">
         <div className="loading">
           <div className="loading-spinner"></div>
-          <p>Chargement...</p>
+          <p>{t.loading}</p>
         </div>
       </div>
     );
@@ -75,10 +113,10 @@ const PropertyFormPage: React.FC = () => {
       <div className="property-form-page-container">
         <div className="error">
           <div className="error-icon">❌</div>
-          <h2>Erreur</h2>
+          <h2>{t.error}</h2>
           <p>{error}</p>
           <button onClick={handleCancel} className="btn btn-primary">
-            Retour à la liste
+            {t.backToList}
           </button>
         </div>
       </div>
@@ -89,23 +127,20 @@ const PropertyFormPage: React.FC = () => {
     <div className="property-form-page-container">
       <div className="property-form-page-header">
         <button onClick={handleCancel} className="btn-back">
-          ← Retour à la liste
+          {t.back}
         </button>
       </div>
 
       <div className="property-form-page-content">
         <div className="form-header">
           <div className="form-badge">
-            {isEditing ? 'Modification' : 'Nouvelle propriété'}
+            {isEditing ? t.modification : t.newProperty}
           </div>
           <h1 className="form-title">
-            {isEditing ? 'Modifier la propriété' : 'Ajouter une nouvelle propriété'}
+            {isEditing ? t.editProperty : t.addProperty}
           </h1>
           <p className="form-description">
-            {isEditing 
-              ? 'Modifiez les informations de cette propriété'
-              : 'Remplissez les informations pour ajouter une nouvelle propriété'
-            }
+            {isEditing ? t.editDesc : t.addDesc}
           </p>
         </div>
 
@@ -121,6 +156,7 @@ const PropertyFormPage: React.FC = () => {
           onSubmit={handleSubmit}
           onCancel={handleCancel}
           isLoading={submitting}
+          language={language}
         />
       </div>
     </div>
