@@ -1,7 +1,7 @@
 .property-list-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f9fafb 0%, #e7f6ff 100%);
-  padding: 40px 20px;
+  background: transparent;
+  padding: 0;
 }
 
 .property-list-header {
@@ -134,6 +134,13 @@
 .properties-container {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 24px;
+  animation: fadeInUp 0.5s ease-out;
 }
 
 .properties-container.gallery {

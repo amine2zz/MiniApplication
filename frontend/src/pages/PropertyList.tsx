@@ -16,9 +16,8 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [viewMode, setViewMode] = useState<'gallery' | 'list'>(() => {
-    return (localStorage.getItem('viewMode') as 'gallery' | 'list') || 'gallery';
-  });
+  const [viewMode, setViewMode] = useState<'gallery' | 'list'>('gallery');
+
   const navigate = useNavigate();
 
   const texts = {
@@ -34,8 +33,9 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
       noPropertiesDesc: 'Commencez par ajouter votre première propriété',
       noResults: 'Aucun résultat trouvé',
       noResultsDesc: 'Essayez de modifier vos critères de recherche',
-      galleryView: 'Vue galerie',
-      listView: 'Vue liste'
+      gallery: 'Galerie',
+      list: 'Liste'
+
     },
     en: {
       management: 'Real Estate Management',
@@ -49,8 +49,9 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
       noPropertiesDesc: 'Start by adding your first property',
       noResults: 'No results found',
       noResultsDesc: 'Try modifying your search criteria',
-      galleryView: 'Gallery view',
-      listView: 'List view'
+      gallery: 'Gallery',
+      list: 'List'
+
     }
   };
 
@@ -61,9 +62,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem('viewMode', viewMode);
-  }, [viewMode]);
+
 
   const loadProperties = async () => {
     try {
@@ -183,46 +182,35 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
         onReset={handleResetFilter}
         language={language}
         properties={properties}
+        viewMode={viewMode}
+        onViewModeChange={setViewMode}
       />
 
-      <div className="view-controls">
-        <div className="view-switcher">
-          <button 
-            className={`view-btn ${viewMode === 'gallery' ? 'active' : ''}`}
-            onClick={() => setViewMode('gallery')}
-          >
-            <i className="fas fa-th category-icon-blue"></i> {t.galleryView}
-          </button>
-          <button 
-            className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
-            onClick={() => setViewMode('list')}
-          >
-            <i className="fas fa-list category-icon-blue"></i> {t.listView}
+
+
+
+
+      {properties.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-icon"><i className="fas fa-home category-icon-blue"></i></div>
+          <h3>{t.noProperties}</h3>
+          <p>{t.noPropertiesDesc}</p>
+          <button onClick={handleAddNew} className="btn btn-primary">
+            {t.addProperty}
           </button>
         </div>
-      </div>
-
-      <div className={`properties-container ${viewMode}`}>
-        {properties.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon"><i className="fas fa-home category-icon-blue"></i></div>
-            <h3>{t.noProperties}</h3>
-            <p>{t.noPropertiesDesc}</p>
-            <button onClick={handleAddNew} className="btn btn-primary">
-              {t.addProperty}
-            </button>
-          </div>
-        ) : filteredProperties.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon"><i className="fas fa-search category-icon-blue"></i></div>
-            <h3>{t.noResults}</h3>
-            <p>{t.noResultsDesc}</p>
-            <button onClick={handleResetFilter} className="btn btn-primary">
-              {t.retry}
-            </button>
-          </div>
-        ) : (
-          filteredProperties.map((property) => (
+      ) : filteredProperties.length === 0 ? (
+        <div className="empty-state">
+          <div className="empty-icon"><i className="fas fa-search category-icon-blue"></i></div>
+          <h3>{t.noResults}</h3>
+          <p>{t.noResultsDesc}</p>
+          <button onClick={handleResetFilter} className="btn btn-primary">
+            {t.retry}
+          </button>
+        </div>
+      ) : (
+        <div className={`properties-container ${viewMode}`}>
+          {filteredProperties.map((property) => (
             viewMode === 'gallery' ? (
               <PropertyCard
                 key={property.id}
@@ -242,9 +230,9 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
                 language={language}
               />
             )
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

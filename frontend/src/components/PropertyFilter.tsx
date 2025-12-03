@@ -17,9 +17,11 @@ interface PropertyFilterProps {
   onReset: () => void;
   language: 'fr' | 'en';
   properties: Array<{city: string; price: number; surface: number}>;
+  viewMode: 'gallery' | 'list';
+  onViewModeChange: (mode: 'gallery' | 'list') => void;
 }
 
-const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, language, properties }) => {
+const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, language, properties, viewMode, onViewModeChange }) => {
   const cities = Array.from(new Set(properties.map(p => p.city))).sort();
   const prices = properties.map(p => p.price).sort((a, b) => a - b);
   const surfaces = properties.map(p => p.surface).sort((a, b) => a - b);
@@ -71,7 +73,9 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
       studio: 'Studio',
       available: 'Disponible',
       sold: 'Vendu',
-      rented: 'Loué'
+      rented: 'Loué',
+      gallery: 'Galerie',
+      list: 'Liste'
     },
     en: {
       searchPlaceholder: 'Search by city...',
@@ -95,7 +99,9 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
       studio: 'Studio',
       available: 'Available',
       sold: 'Sold',
-      rented: 'Rented'
+      rented: 'Rented',
+      gallery: 'Gallery',
+      list: 'List'
     }
   };
 
@@ -216,6 +222,23 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
               ))}
             </div>
           )}
+        </div>
+        
+        <div className="view-switcher">
+          <button 
+            className={`view-btn ${viewMode === 'gallery' ? 'active' : ''}`}
+            onClick={() => onViewModeChange('gallery')}
+          >
+            <i className="fas fa-th category-icon-blue"></i>
+            {t.gallery}
+          </button>
+          <button 
+            className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+            onClick={() => onViewModeChange('list')}
+          >
+            <i className="fas fa-list category-icon-blue"></i>
+            {t.list}
+          </button>
         </div>
         
         <button 
