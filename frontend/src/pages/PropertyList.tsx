@@ -175,8 +175,6 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
 
   return (
     <div className="property-list-container">
-
-
       <PropertyFilter 
         onFilter={handleFilter}
         onReset={handleResetFilter}

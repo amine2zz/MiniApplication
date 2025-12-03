@@ -2,6 +2,8 @@
   min-height: 100vh;
   background: transparent;
   padding: 0;
+  position: relative;
+  z-index: 3;
 }
 
 .property-list-header {
@@ -168,6 +170,15 @@
   }
 }
 
+/* Effet glassmorphism pour les cartes */
+.header-content,
+.empty-state {
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
 .loading,
 .error {
   display: flex;
@@ -283,4 +294,6 @@
     width: 100%;
     text-align: center;
   }
+  
+
 }

@@ -38,6 +38,17 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
           </div>
           
           <div className="footer-info">
+            <div className="footer-social">
+              <a href="https://github.com/amine2zz" target="_blank" rel="noopener noreferrer" className="social-link">
+                <i className="fab fa-github"></i>
+              </a>
+              <a href="https://www.linkedin.com/in/mohamed-amine-ghariani/" target="_blank" rel="noopener noreferrer" className="social-link">
+                <i className="fab fa-linkedin"></i>
+              </a>
+              <a href="mailto:gharianiamine1@gmail.com" className="social-link">
+                <i className="fas fa-envelope"></i>
+              </a>
+            </div>
             <p className="footer-text">
               © 12/2025 {t.title}. {t.rights}.
             </p>
