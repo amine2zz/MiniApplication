@@ -42,7 +42,7 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
               © 12/2025 {t.title}. {t.rights}.
             </p>
             <p className="footer-text">
-              {t.madeWith} ❤️ {t.by} Med Amine Ghariani
+              {t.madeWith} <i className="fas fa-heart category-icon-blue"></i> {t.by} Med Amine Ghariani
             </p>
           </div>
         </div>

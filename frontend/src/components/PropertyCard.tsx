@@ -1,5 +1,6 @@
 import React from 'react';
 import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
+import { getCategoryIcon, getStatusIcon } from '../utils/icons';
 import './PropertyCard.css';
 
 interface PropertyCardProps {
@@ -37,16 +38,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
   const t = texts[language];
 
 
-  const getCategoryIcon = (category: PropertyCategory) => {
-    const icons = {
-      [PropertyCategory.APARTMENT]: <i className="fas fa-building"></i>,
-      [PropertyCategory.HOUSE]: <i className="fas fa-home"></i>,
-      [PropertyCategory.OFFICE]: <i className="fas fa-briefcase"></i>,
-      [PropertyCategory.VILLA]: <i className="fas fa-crown"></i>,
-      [PropertyCategory.STUDIO]: <i className="fas fa-door-open"></i>
-    };
-    return icons[category] || <i className="fas fa-building"></i>;
-  };
+
 
 
 
@@ -59,14 +51,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
     return statusMap[status] || status;
   };
 
-  const getStatusIcon = (status: PropertyStatus) => {
-    const iconMap = {
-      [PropertyStatus.AVAILABLE]: '✅',
-      [PropertyStatus.SOLD]: '🔒',
-      [PropertyStatus.RENTED]: '🏠'
-    };
-    return iconMap[status] || '📋';
-  };
+
 
   const getTypeText = (type: PropertyType) => {
     return type === PropertyType.SALE ? t.forSale : t.forRent;
@@ -76,18 +61,24 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
     <div className="property-card">
       <div className="property-card-content">
         <div className="property-header">
-          <span className="category-icon">{getCategoryIcon(property.category)}</span>
-          <h3 className="property-title">{property.title}</h3>
+          <div className="property-title-row">
+            <span className="category-icon">{getCategoryIcon(property.category)}</span>
+            <h3 className="property-title">{property.title}</h3>
+          </div>
           <span className={`status-badge ${property.status}`}>
-            <span>{getStatusIcon(property.status)}</span>
+            {getStatusIcon(property.status)}
             {getStatusText(property.status)}
           </span>
         </div>
         <div className="property-details">
-          <p className="property-city">📍 {property.city}</p>
-          <p className="property-type">{getTypeText(property.type)}</p>
-          <p className="property-price">{property.price.toLocaleString()} €</p>
-          <p className="property-surface">📐 {property.surface} m²</p>
+          <div className="property-details-left">
+            <p className="property-type">{getTypeText(property.type)}</p>
+            <p className="property-city"><i className="fas fa-map-marker-alt category-icon-blue"></i> {property.city}</p>
+            <p className="property-surface"><i className="fas fa-ruler-combined category-icon-blue"></i> {property.surface} m²</p>
+          </div>
+          <div className="property-details-right">
+            <p className="property-price">{property.price.toLocaleString()} €</p>
+          </div>
         </div>
         <div className="property-actions">
           <button 

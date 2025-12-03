@@ -1,5 +1,6 @@
 import React from 'react';
 import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
+import { getCategoryIcon, getStatusIcon } from '../utils/icons';
 import './PropertyListCard.css';
 
 interface PropertyListCardProps {
@@ -38,16 +39,7 @@ const PropertyListCard: React.FC<PropertyListCardProps> = ({ property, onView, o
 
 
 
-  const getCategoryIcon = (category: PropertyCategory) => {
-    const icons = {
-      [PropertyCategory.APARTMENT]: <i className="fas fa-building"></i>,
-      [PropertyCategory.HOUSE]: <i className="fas fa-home"></i>,
-      [PropertyCategory.OFFICE]: <i className="fas fa-briefcase"></i>,
-      [PropertyCategory.VILLA]: <i className="fas fa-crown"></i>,
-      [PropertyCategory.STUDIO]: <i className="fas fa-door-open"></i>
-    };
-    return icons[category] || <i className="fas fa-building"></i>;
-  };
+
 
   const getStatusText = (status: PropertyStatus) => {
     const statusMap = {
@@ -58,14 +50,7 @@ const PropertyListCard: React.FC<PropertyListCardProps> = ({ property, onView, o
     return statusMap[status] || status;
   };
 
-  const getStatusIcon = (status: PropertyStatus) => {
-    const iconMap = {
-      [PropertyStatus.AVAILABLE]: '✅',
-      [PropertyStatus.SOLD]: '🔒',
-      [PropertyStatus.RENTED]: '🏠'
-    };
-    return iconMap[status] || '📋';
-  };
+
 
   const getTypeText = (type: PropertyType) => {
     return type === PropertyType.SALE ? t.forSale : t.forRent;
@@ -81,16 +66,16 @@ const PropertyListCard: React.FC<PropertyListCardProps> = ({ property, onView, o
         <div className="list-card-header">
           <h3 className="list-card-title">{property.title}</h3>
           <span className={`list-status-badge ${property.status}`}>
-            <span>{getStatusIcon(property.status)}</span>
+            {getStatusIcon(property.status)}
             {getStatusText(property.status)}
           </span>
         </div>
         
         <div className="list-card-details">
-          <span className="list-detail">📍 {property.city}</span>
           <span className="list-detail">{getTypeText(property.type)}</span>
+          <span className="list-detail"><i className="fas fa-map-marker-alt category-icon-blue"></i> {property.city}</span>
+          <span className="list-detail"><i className="fas fa-ruler-combined category-icon-blue"></i> {property.surface} m²</span>
           <span className="list-detail list-price">{property.price.toLocaleString()} €</span>
-          <span className="list-detail">📐 {property.surface} m²</span>
         </div>
       </div>
       

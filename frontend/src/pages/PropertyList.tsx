@@ -191,13 +191,13 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
             className={`view-btn ${viewMode === 'gallery' ? 'active' : ''}`}
             onClick={() => setViewMode('gallery')}
           >
-            🔳 {t.galleryView}
+            <i className="fas fa-th category-icon-blue"></i> {t.galleryView}
           </button>
           <button 
             className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
             onClick={() => setViewMode('list')}
           >
-            📋 {t.listView}
+            <i className="fas fa-list category-icon-blue"></i> {t.listView}
           </button>
         </div>
       </div>
@@ -205,7 +205,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
       <div className={`properties-container ${viewMode}`}>
         {properties.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">🏠</div>
+            <div className="empty-icon"><i className="fas fa-home category-icon-blue"></i></div>
             <h3>{t.noProperties}</h3>
             <p>{t.noPropertiesDesc}</p>
             <button onClick={handleAddNew} className="btn btn-primary">
@@ -214,7 +214,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
           </div>
         ) : filteredProperties.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">🔍</div>
+            <div className="empty-icon"><i className="fas fa-search category-icon-blue"></i></div>
             <h3>{t.noResults}</h3>
             <p>{t.noResultsDesc}</p>
             <button onClick={handleResetFilter} className="btn btn-primary">

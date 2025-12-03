@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
+import { getCategoryIcon, getStatusIcon } from '../utils/icons';
 import { propertyApi } from '../services/api';
 import './PropertyDetail.css';
 
@@ -107,16 +108,7 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
     }).format(price);
   };
 
-  const getCategoryIcon = (category: PropertyCategory) => {
-    const icons = {
-      [PropertyCategory.APARTMENT]: '🏢',
-      [PropertyCategory.HOUSE]: '🏠',
-      [PropertyCategory.OFFICE]: '🏢',
-      [PropertyCategory.VILLA]: '🏡',
-      [PropertyCategory.STUDIO]: '🏢'
-    };
-    return icons[category] || '🏠';
-  };
+
 
   const getStatusColor = (status: PropertyStatus) => {
     const colors = {
@@ -166,7 +158,7 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
     return (
       <div className="property-detail-container">
         <div className="error">
-          <div className="error-icon">❌</div>
+          <div className="error-icon"><i className="fas fa-exclamation-triangle category-icon-blue"></i></div>
           <h2>{t.notFound}</h2>
           <p>{error}</p>
           <button onClick={handleBack} className="btn btn-primary">
@@ -203,7 +195,7 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
 
           <div className="property-info-grid">
             <div className="info-item">
-              <div className="info-icon">📍</div>
+              <div className="info-icon"><i className="fas fa-map-marker-alt category-icon-blue"></i></div>
               <div className="info-content">
                 <span className="info-label">{t.location}</span>
                 <span className="info-value">{property.city}</span>
@@ -211,7 +203,7 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
             </div>
 
             <div className="info-item">
-              <div className="info-icon">🏷️</div>
+              <div className="info-icon"><i className="fas fa-tag category-icon-blue"></i></div>
               <div className="info-content">
                 <span className="info-label">{t.type}</span>
                 <span className="info-value">{getTypeText(property.type)}</span>
@@ -227,7 +219,7 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
             </div>
 
             <div className="info-item">
-              <div className="info-icon">💰</div>
+              <div className="info-icon"><i className="fas fa-euro-sign category-icon-blue"></i></div>
               <div className="info-content">
                 <span className="info-label">{t.price}</span>
                 <span className="info-value price">{formatPrice(property.price)}</span>
@@ -235,7 +227,7 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
             </div>
 
             <div className="info-item">
-              <div className="info-icon">📐</div>
+              <div className="info-icon"><i className="fas fa-ruler-combined category-icon-blue"></i></div>
               <div className="info-content">
                 <span className="info-label">{t.surface}</span>
                 <span className="info-value">{property.surface} m²</span>
@@ -243,7 +235,7 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
             </div>
 
             <div className="info-item">
-              <div className="info-icon">📊</div>
+              <div className="info-icon"><i className="fas fa-chart-bar category-icon-blue"></i></div>
               <div className="info-content">
                 <span className="info-label">{t.pricePerM2}</span>
                 <span className="info-value">

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { getCategoryIconFilter, getStatusIconFilter } from '../utils/icons';
 import './PropertyFilter.css';
 
 interface FilterOptions {
@@ -162,11 +163,6 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
     setIsExpanded(false);
   };
 
-  const getCategoryIcon = (cat: string) => {
-    const icons = { apartment: '🏢', house: '🏠', office: '🏢', villa: '🏡', studio: '🏢' };
-    return icons[cat as keyof typeof icons] || '🏠';
-  };
-
   const getCategoryText = (cat: string) => {
     const texts = { apartment: t.apartment, house: t.house, office: t.office, villa: t.villa, studio: t.studio };
     return texts[cat as keyof typeof texts] || cat;
@@ -175,11 +171,6 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
   const getStatusText = (status: string) => {
     const texts = { available: t.available, sold: t.sold, rented: t.rented };
     return texts[status as keyof typeof texts] || status;
-  };
-
-  const getStatusIcon = (status: string) => {
-    const icons = { available: '✅', sold: '🔒', rented: '🏠' };
-    return icons[status as keyof typeof icons] || '📋';
   };
 
   return (
@@ -347,7 +338,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
               <div className="filter-tags">
                 {filters.categories.map((category) => (
                   <span key={category} className="filter-tag">
-                    {getCategoryIcon(category)} {getCategoryText(category)}
+                    {getCategoryIconFilter(category)} {getCategoryText(category)}
                     <button onClick={() => {
                       setFilters(prev => ({ 
                         ...prev, 
@@ -380,7 +371,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
               <div className="filter-tags">
                 {filters.statuses.map((status) => (
                   <span key={status} className="filter-tag">
-                    {getStatusIcon(status)} {getStatusText(status)}
+                    {getStatusIconFilter(status)} {getStatusText(status)}
                     <button onClick={() => {
                       setFilters(prev => ({ 
                         ...prev, 

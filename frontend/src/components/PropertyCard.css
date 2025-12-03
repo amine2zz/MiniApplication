@@ -24,9 +24,15 @@
 
 .property-header {
   display: flex;
-  align-items: flex-start;
+  flex-direction: column;
   gap: 8px;
   margin-bottom: 8px;
+}
+
+.property-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .category-icon {
@@ -34,9 +40,17 @@
   flex-shrink: 0;
 }
 
+.category-apartment,
+.category-house,
+.category-office,
+.category-villa,
+.category-studio {
+  color: #0085ff;
+}
+
 .property-card .property-header .property-title {
   font-family: 'Poppins', sans-serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   color: #0f172a;
   margin: 0;
@@ -51,39 +65,61 @@
 }
 
 .status-badge {
-  font-size: 11px;
-  font-weight: 500;
-  color: #ffffff;
-  background: #64748b;
-  padding: 6px 10px;
-  border-radius: 16px;
+  font-size: 10px;
+  font-weight: 400;
+  color: #64748b;
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 12px;
   text-transform: capitalize;
   flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  gap: 3px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
 }
 
-.status-badge.available {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+.status-badge i {
+  color: inherit;
 }
 
-.status-badge.sold {
-  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+.status-badge.available,
+.status-badge.available i {
+  color: #10b981;
 }
 
-.status-badge.rented {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+.status-badge.sold,
+.status-badge.sold i {
+  color: #ef4444;
+}
+
+.status-badge.rented,
+.status-badge.rented i {
+  color: #f59e0b;
 }
 
 .property-details {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
   margin-bottom: 8px;
-  align-content: start;
+  width: 100%;
+}
+
+.property-details-left {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.property-details-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
 }
 
 .property-city,

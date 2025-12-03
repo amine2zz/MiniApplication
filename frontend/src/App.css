@@ -133,3 +133,9 @@ input, textarea, select {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
 }
+
+/* Global icon styles */
+.category-icon-blue,
+.status-icon-blue {
+  color: #0085ff;
+}

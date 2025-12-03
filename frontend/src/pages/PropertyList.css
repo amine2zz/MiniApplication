@@ -123,6 +123,14 @@
   color: #0085ff;
 }
 
+.view-btn .category-icon-blue {
+  color: #0085ff;
+}
+
+.view-btn.active .category-icon-blue {
+  color: white;
+}
+
 .properties-container {
   max-width: 1200px;
   margin: 0 auto;
