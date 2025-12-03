@@ -84,7 +84,7 @@ const PropertyFormPage: React.FC<PropertyFormPageProps> = ({ language }) => {
         await propertyApi.create(data as CreatePropertyDTO);
       }
 
-      navigate('/');
+      navigate('/', { state: { preserveViewMode: true } });
     } catch (err) {
       setError(t.saveError);
       console.error('Error saving property:', err);
@@ -94,7 +94,7 @@ const PropertyFormPage: React.FC<PropertyFormPageProps> = ({ language }) => {
   };
 
   const handleCancel = () => {
-    navigate('/');
+    navigate('/', { state: { preserveViewMode: true } });
   };
 
   if (loading) {

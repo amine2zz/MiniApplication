@@ -1,104 +1,71 @@
-import { Property, CreatePropertyDTO, UpdatePropertyDTO } from '../models/Property';
+import { Property, CreatePropertyDTO, UpdatePropertyDTO, PropertyType, PropertyStatus, PropertyCategory } from '../models/Property';
+import { IPropertyService } from '../interfaces/IPropertyService';
 import { v4 as uuidv4 } from 'uuid';
+import * as fs from 'fs';
+import * as path from 'path';
 
-class PropertyService {
-  private properties: Property[] = [
-    {
-      id: '1',
-      title: 'Appartement moderne centre-ville',
-      city: 'Paris',
-      price: 450000,
-      surface: 65
-    },
-    {
-      id: '2',
-      title: 'Maison avec jardin',
-      city: 'Lyon',
-      price: 320000,
-      surface: 120
-    },
-    {
-      id: '3',
-      title: 'Studio lumineux',
-      city: 'Marseille',
-      price: 180000,
-      surface: 35
-    },
-    {
-      id: '4',
-      title: 'Villa avec piscine',
-      city: 'Nice',
-      price: 850000,
-      surface: 200
-    },
-    {
-      id: '5',
-      title: 'Loft industriel',
-      city: 'Bordeaux',
-      price: 280000,
-      surface: 90
-    },
-    {
-      id: '6',
-      title: 'Duplex avec terrasse',
-      city: 'Toulouse',
-      price: 380000,
-      surface: 110
-    },
-    {
-      id: '7',
-      title: 'Penthouse vue mer',
-      city: 'Cannes',
-      price: 1200000,
-      surface: 150
-    },
-    {
-      id: '8',
-      title: 'Maison de ville',
-      city: 'Lille',
-      price: 250000,
-      surface: 95
+class PropertyService implements IPropertyService {
+  private dataPath = path.join(__dirname, '../data/properties.json');
+
+  private loadProperties(): Property[] {
+    try {
+      const data = fs.readFileSync(this.dataPath, 'utf8');
+      return JSON.parse(data);
+    } catch {
+      return [];
     }
-  ];
+  }
+
+  private saveProperties(properties: Property[]): void {
+    fs.writeFileSync(this.dataPath, JSON.stringify(properties, null, 2));
+  }
 
   getAllProperties(): Property[] {
-    return this.properties;
+    return this.loadProperties();
   }
 
   getPropertyById(id: string): Property | undefined {
-    return this.properties.find(property => property.id === id);
+    const properties = this.loadProperties();
+    return properties.find(property => property.id === id);
   }
 
   createProperty(propertyData: CreatePropertyDTO): Property {
+    const properties = this.loadProperties();
     const newProperty: Property = {
       id: uuidv4(),
-      ...propertyData
+      ...propertyData,
+      status: PropertyStatus.AVAILABLE
     };
-    this.properties.push(newProperty);
+    properties.push(newProperty);
+    this.saveProperties(properties);
     return newProperty;
   }
 
   updateProperty(id: string, propertyData: UpdatePropertyDTO): Property | null {
-    const propertyIndex = this.properties.findIndex(property => property.id === id);
+    const properties = this.loadProperties();
+    const propertyIndex = properties.findIndex(property => property.id === id);
     if (propertyIndex === -1) {
       return null;
     }
 
-    this.properties[propertyIndex] = {
-      ...this.properties[propertyIndex],
+    properties[propertyIndex] = {
+      ...properties[propertyIndex],
       ...propertyData
     };
 
-    return this.properties[propertyIndex];
+    this.saveProperties(properties);
+    return properties[propertyIndex];
   }
 
   deleteProperty(id: string): boolean {
-    const propertyIndex = this.properties.findIndex(property => property.id === id);
+    const properties = this.loadProperties();
+    const propertyIndex = properties.findIndex(property => property.id === id);
     if (propertyIndex === -1) {
       return false;
     }
 
-    this.properties.splice(propertyIndex, 1);
+    properties.splice(propertyIndex, 1);
+    this.saveProperties(properties);
     return true;
   }
 }

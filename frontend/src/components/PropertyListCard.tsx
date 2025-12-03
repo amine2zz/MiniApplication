@@ -1,8 +1,8 @@
 import React from 'react';
 import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
-import './PropertyCard.css';
+import './PropertyListCard.css';
 
-interface PropertyCardProps {
+interface PropertyListCardProps {
   property: Property;
   onView: (id: string) => void;
   onEdit: (id: string) => void;
@@ -10,7 +10,7 @@ interface PropertyCardProps {
   language: 'fr' | 'en';
 }
 
-const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, onDelete, language }) => {
+const PropertyListCard: React.FC<PropertyListCardProps> = ({ property, onView, onEdit, onDelete, language }) => {
   const texts = {
     fr: {
       view: 'Voir',
@@ -37,6 +37,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
   const t = texts[language];
 
 
+
   const getCategoryIcon = (category: PropertyCategory) => {
     const icons = {
       [PropertyCategory.APARTMENT]: '🏢',
@@ -47,8 +48,6 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
     };
     return icons[category] || '🏠';
   };
-
-
 
   const getStatusText = (status: PropertyStatus) => {
     const statusMap = {
@@ -64,44 +63,49 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
   };
 
   return (
-    <div className="property-card">
-      <div className="property-card-content">
-        <div className="property-header">
-          <span className="category-icon">{getCategoryIcon(property.category)}</span>
-          <h3 className="property-title">{property.title}</h3>
-          <span className="status-badge">
+    <div className="property-list-card">
+      <div className="list-card-icon">
+        {getCategoryIcon(property.category)}
+      </div>
+      
+      <div className="list-card-content">
+        <div className="list-card-header">
+          <h3 className="list-card-title">{property.title}</h3>
+          <span className="list-status-badge">
             {getStatusText(property.status)}
           </span>
         </div>
-        <div className="property-details">
-          <p className="property-city">📍 {property.city}</p>
-          <p className="property-type">{getTypeText(property.type)}</p>
-          <p className="property-price">{property.price.toLocaleString()} €</p>
-          <p className="property-surface">📐 {property.surface} m²</p>
+        
+        <div className="list-card-details">
+          <span className="list-detail">📍 {property.city}</span>
+          <span className="list-detail">{getTypeText(property.type)}</span>
+          <span className="list-detail list-price">{property.price.toLocaleString()} €</span>
+          <span className="list-detail">📐 {property.surface} m²</span>
         </div>
-        <div className="property-actions">
-          <button 
-            className="btn btn-primary" 
-            onClick={() => onView(property.id)}
-          >
-            {t.view}
-          </button>
-          <button 
-            className="btn btn-secondary" 
-            onClick={() => onEdit(property.id)}
-          >
-            {t.edit}
-          </button>
-          <button 
-            className="btn btn-danger" 
-            onClick={() => onDelete(property.id)}
-          >
-            🗑️
-          </button>
-        </div>
+      </div>
+      
+      <div className="list-card-actions">
+        <button 
+          className="list-btn list-btn-primary" 
+          onClick={() => onView(property.id)}
+        >
+          {t.view}
+        </button>
+        <button 
+          className="list-btn list-btn-secondary" 
+          onClick={() => onEdit(property.id)}
+        >
+          {t.edit}
+        </button>
+        <button 
+          className="list-btn list-btn-danger" 
+          onClick={() => onDelete(property.id)}
+        >
+          🗑️
+        </button>
       </div>
     </div>
   );
 };
 
-export default PropertyCard;
+export default PropertyListCard;

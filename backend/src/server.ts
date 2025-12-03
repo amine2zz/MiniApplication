@@ -8,20 +8,13 @@ const fastify = Fastify({
 
 const start = async () => {
   try {
-    // Configuration CORS
     await fastify.register(cors, {
-      origin: ['http://localhost:3000', 'http://127.0.0.1:3000'],
-      methods: ['GET', 'POST', 'PUT', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization']
+      origin: 'http://localhost:3000',
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
     });
 
     // Enregistrement des routes
     await fastify.register(propertyRoutes);
-
-    // Route de santé
-    fastify.get('/health', async (request, reply) => {
-      return { status: 'OK', timestamp: new Date().toISOString() };
-    });
 
     // Démarrage du serveur
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;

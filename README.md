@@ -128,30 +128,6 @@ npm start
 - **Poids:** 400, 500, 600, 700
 - **Responsive:** Adaptatif mobile/desktop
 
-## 📊 Modèle de Données
-
-```typescript
-// 🏠 Propriété immobilière
-interface Property {
-  id: string;        // UUID unique
-  title: string;     // Titre (multilingue)
-  city: string;      // Ville
-  price: number;     // Prix en euros
-  surface: number;   // Surface en m²
-}
-
-// 📝 DTO de création
-interface CreatePropertyDTO {
-  title: string;
-  city: string;
-  price: number;
-  surface: number;
-}
-
-// ✏️ DTO de mise à jour
-interface UpdatePropertyDTO extends Partial<CreatePropertyDTO> {}
-```
-
 ## 🔧 Choix Techniques
 
 ### Architecture Scalable
@@ -168,23 +144,28 @@ interface UpdatePropertyDTO extends Partial<CreatePropertyDTO> {}
 
 ### Interface Utilisateur
 - **🎨 Design responsive** - Mobile-first approach
-- **✨ Animations fluides** - Transitions CSS3
-- **⏳ États de chargement** - Spinners et feedback
-- **🚨 Gestion d'erreurs** - Messages clairs
-- **🧭 Navigation intuitive** - UX optimisée
-- **🔍 Filtrage avancé** - Multi-critères avec sliders
-- **🌐 Multilingue** - FR/EN avec traductions
+- **✨ Animations fluides** - Transitions CSS3 avec cubic-bezier
+- **🎭 Micro-interactions** - Hover effects et animations contextuelles
+- **⏳ États de chargement** - Spinners et feedback visuels
+- **🚨 Gestion d'erreurs** - Messages clairs et actions de récupération
+- **🧭 Navigation intuitive** - UX optimisée avec transitions de pages
+- **🔍 Filtrage avancé** - Multi-critères avec sliders et animations
+- **🌐 Multilingue** - FR/EN avec traductions complètes
+- **🔄 Transitions de vues** - Animations smooth entre galerie/liste
 
 ## 🔮 Fonctionnalités Actuelles
 
 ### ✅ Implémentées
-- **🏠 CRUD complet** - Créer, lire, modifier, supprimer
-- **🔍 Filtrage avancé** - Multi-villes, prix, surface avec sliders
-- **🌐 Multilingue** - FR/EN avec traductions complètes
+- **🏠 CRUD complet** - Créer, lire, modifier, supprimer avec animations
+- **🔍 Filtrage avancé** - Multi-villes, prix, surface avec sliders animés
+- **🌐 Multilingue** - FR/EN avec switcher élégant
 - **📱 Responsive** - Design adaptatif mobile/desktop
 - **⚡ Performance** - Fastify + React optimisés
-- **🎨 UI/UX moderne** - Design CFP professionnel
+- **🎨 UI/UX moderne** - Design CFP avec micro-animations
 - **🔒 Validation** - Zod + TypeScript strict
+- **✨ Animations système** - Transitions fluides partout
+- **🎭 États interactifs** - Hover effects et feedback visuels
+- **🔄 Transitions de pages** - Navigation smooth entre vues
 
 ### 🚀 Évolutions Futures
 
@@ -255,11 +236,14 @@ interface UpdatePropertyDTO extends Partial<CreatePropertyDTO> {}
 - ✅ **UX moderne** - Interface intuitive et responsive
 
 ### 🏆 Points Forts
-- **🔍 Filtrage avancé** - Multi-critères avec sliders interactifs
-- **🌐 Multilingue** - Support FR/EN complet
+- **🔍 Filtrage avancé** - Multi-critères avec sliders interactifs et animations
+- **🌐 Multilingue** - Support FR/EN avec switcher élégant
 - **⚡ Performance** - Optimisations React + Fastify
-- **🎨 Design moderne** - UI/UX professionnelle
+- **🎨 Design moderne** - UI/UX professionnelle avec micro-animations
 - **🔒 Robustesse** - Validation et gestion d'erreurs
+- **✨ Expérience utilisateur** - Animations fluides et transitions smooth
+- **🎭 Cohérence visuelle** - Design system unifié avec états interactifs
+- **🔄 Navigation intuitive** - Transitions de pages et changements de vues animés
 
 ---
 

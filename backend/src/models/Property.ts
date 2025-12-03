@@ -1,9 +1,31 @@
+export enum PropertyType {
+  SALE = 'sale',
+  RENT = 'rent'
+}
+
+export enum PropertyStatus {
+  AVAILABLE = 'available',
+  SOLD = 'sold',
+  RENTED = 'rented'
+}
+
+export enum PropertyCategory {
+  APARTMENT = 'apartment',
+  HOUSE = 'house',
+  OFFICE = 'office',
+  VILLA = 'villa',
+  STUDIO = 'studio'
+}
+
 export interface Property {
   id: string;
   title: string;
   city: string;
   price: number;
   surface: number;
+  type: PropertyType;
+  status: PropertyStatus;
+  category: PropertyCategory;
 }
 
 export interface CreatePropertyDTO {
@@ -11,6 +33,8 @@ export interface CreatePropertyDTO {
   city: string;
   price: number;
   surface: number;
+  type: PropertyType;
+  category: PropertyCategory;
 }
 
 export interface UpdatePropertyDTO {
@@ -18,4 +42,7 @@ export interface UpdatePropertyDTO {
   city?: string;
   price?: number;
   surface?: number;
+  type?: PropertyType;
+  category?: PropertyCategory;
+  status?: PropertyStatus;
 }

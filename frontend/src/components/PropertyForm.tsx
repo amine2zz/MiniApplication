@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Property, CreatePropertyDTO, UpdatePropertyDTO } from '../types/Property';
+import { Property, CreatePropertyDTO, UpdatePropertyDTO, PropertyType, PropertyCategory, PropertyStatus } from '../types/Property';
 import './PropertyForm.css';
 
 interface PropertyFormProps {
@@ -34,7 +34,20 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       cancel: 'Annuler',
       saving: 'Enregistrement...',
       edit: 'Modifier',
-      add: 'Ajouter'
+      add: 'Ajouter',
+      type: 'Type',
+      category: 'Catégorie',
+      status: 'Statut',
+      forSale: 'À vendre',
+      forRent: 'À louer',
+      apartment: 'Appartement',
+      house: 'Maison',
+      office: 'Bureau',
+      villa: 'Villa',
+      studio: 'Studio',
+      available: 'Disponible',
+      sold: 'Vendu',
+      rented: 'Loué'
     },
     en: {
       editTitle: 'Edit property',
@@ -46,13 +59,26 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       cityRequired: 'City is required',
       cityPlaceholder: 'Ex: Paris',
       price: 'Price (€)',
-      priceRequired: 'Price must be a positive number',
+      priceRequired: 'Price must be positive',
       surface: 'Surface (m²)',
-      surfaceRequired: 'Surface must be a positive number',
+      surfaceRequired: 'Surface must be positive',
       cancel: 'Cancel',
       saving: 'Saving...',
       edit: 'Edit',
-      add: 'Add'
+      add: 'Add',
+      type: 'Type',
+      category: 'Category',
+      status: 'Status',
+      forSale: 'For Sale',
+      forRent: 'For Rent',
+      apartment: 'Apartment',
+      house: 'House',
+      office: 'Office',
+      villa: 'Villa',
+      studio: 'Studio',
+      available: 'Available',
+      sold: 'Sold',
+      rented: 'Rented'
     }
   };
 
@@ -61,7 +87,10 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     title: '',
     city: '',
     price: '',
-    surface: ''
+    surface: '',
+    type: PropertyType.SALE,
+    category: PropertyCategory.APARTMENT,
+    status: PropertyStatus.AVAILABLE
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -72,7 +101,10 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
         title: property.title,
         city: property.city,
         price: property.price.toString(),
-        surface: property.surface.toString()
+        surface: property.surface.toString(),
+        type: property.type,
+        category: property.category,
+        status: property.status
       });
     }
   }, [property]);
@@ -121,7 +153,10 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       title: formData.title.trim(),
       city: formData.city.trim(),
       price: parseFloat(formData.price),
-      surface: parseFloat(formData.surface)
+      surface: parseFloat(formData.surface),
+      type: formData.type,
+      category: formData.category,
+      ...(property && { status: formData.status })
     };
 
     onSubmit(submitData);
@@ -213,6 +248,56 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
             {errors.surface && <span className="error-message">{errors.surface}</span>}
           </div>
         </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <label htmlFor="type" className="form-label">{t.type} *</label>
+            <select
+              id="type"
+              name="type"
+              value={formData.type}
+              onChange={(e) => setFormData(prev => ({ ...prev, type: e.target.value as PropertyType }))}
+              className="form-input"
+            >
+              <option value={PropertyType.SALE}>{t.forSale}</option>
+              <option value={PropertyType.RENT}>{t.forRent}</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="category" className="form-label">{t.category} *</label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={(e) => setFormData(prev => ({ ...prev, category: e.target.value as PropertyCategory }))}
+              className="form-input"
+            >
+              <option value={PropertyCategory.APARTMENT}>{t.apartment}</option>
+              <option value={PropertyCategory.HOUSE}>{t.house}</option>
+              <option value={PropertyCategory.OFFICE}>{t.office}</option>
+              <option value={PropertyCategory.VILLA}>{t.villa}</option>
+              <option value={PropertyCategory.STUDIO}>{t.studio}</option>
+            </select>
+          </div>
+        </div>
+
+        {property && (
+          <div className="form-group">
+            <label htmlFor="status" className="form-label">{t.status} *</label>
+            <select
+              id="status"
+              name="status"
+              value={formData.status}
+              onChange={(e) => setFormData(prev => ({ ...prev, status: e.target.value as PropertyStatus }))}
+              className="form-input"
+            >
+              <option value={PropertyStatus.AVAILABLE}>{t.available}</option>
+              <option value={PropertyStatus.SOLD}>{t.sold}</option>
+              <option value={PropertyStatus.RENTED}>{t.rented}</option>
+            </select>
+          </div>
+        )}
 
         <div className="form-actions">
           <button

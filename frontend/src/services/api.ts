@@ -25,19 +25,34 @@ export const propertyApi = {
 
   // Créer une nouvelle propriété
   create: async (property: CreatePropertyDTO): Promise<Property> => {
-    const response = await api.post<Property>('/items', property);
-    return response.data;
+    try {
+      const response = await api.post<Property>('/items', property);
+      return response.data;
+    } catch (error: any) {
+      console.error('Create error:', error.response?.data || error.message);
+      throw error;
+    }
   },
 
   // Mettre à jour une propriété
   update: async (id: string, property: UpdatePropertyDTO): Promise<Property> => {
-    const response = await api.put<Property>(`/items/${id}`, property);
-    return response.data;
+    try {
+      const response = await api.put<Property>(`/items/${id}`, property);
+      return response.data;
+    } catch (error: any) {
+      console.error('Update error:', error.response?.data || error.message);
+      throw error;
+    }
   },
 
   // Supprimer une propriété
   delete: async (id: string): Promise<void> => {
-    await api.delete(`/items/${id}`);
+    try {
+      await api.delete(`/items/${id}`);
+    } catch (error: any) {
+      console.error('Delete error:', error.response?.data || error.message);
+      throw error;
+    }
   },
 };
 

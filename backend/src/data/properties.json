@@ -1,0 +1,72 @@
+[
+  {
+    "id": "1",
+    "title": "Appartement moderne centre-ville",
+    "city": "Paris",
+    "price": 450000,
+    "surface": 65,
+    "type": "sale",
+    "status": "rented",
+    "category": "apartment"
+  },
+  {
+    "id": "2",
+    "title": "Maison avec jardin",
+    "city": "Lyon",
+    "price": 320000,
+    "surface": 120,
+    "type": "sale",
+    "status": "available",
+    "category": "house"
+  },
+  {
+    "id": "4",
+    "title": "Villa avec piscine",
+    "city": "Nice",
+    "price": 850000,
+    "surface": 200,
+    "type": "sale",
+    "status": "sold",
+    "category": "apartment"
+  },
+  {
+    "id": "5",
+    "title": "Bureau moderne2",
+    "city": "Bordeaux",
+    "price": 7000,
+    "surface": 90,
+    "type": "rent",
+    "status": "rented",
+    "category": "office"
+  },
+  {
+    "id": "6",
+    "title": "Duplex avec terrasse",
+    "city": "Toulouse",
+    "price": 380000,
+    "surface": 110,
+    "type": "sale",
+    "status": "available",
+    "category": "apartment"
+  },
+  {
+    "id": "7",
+    "title": "Penthouse vue mer",
+    "city": "Cannes",
+    "price": 1200000,
+    "surface": 150,
+    "type": "sale",
+    "status": "available",
+    "category": "apartment"
+  },
+  {
+    "id": "a25fd771-44ca-4d4b-818d-c87546b0e4e3",
+    "title": "abc",
+    "city": "Tunis",
+    "price": 10000,
+    "surface": 1,
+    "type": "sale",
+    "category": "apartment",
+    "status": "available"
+  }
+]

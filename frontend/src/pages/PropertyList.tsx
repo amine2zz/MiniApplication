@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Property } from '../types/Property';
 import { propertyApi } from '../services/api';
 import PropertyCard from '../components/PropertyCard';
+import PropertyListCard from '../components/PropertyListCard';
 import PropertyFilter from '../components/PropertyFilter';
 import './PropertyList.css';
 
@@ -15,6 +16,9 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'gallery' | 'list'>(() => {
+    return (localStorage.getItem('viewMode') as 'gallery' | 'list') || 'gallery';
+  });
   const navigate = useNavigate();
 
   const texts = {
@@ -29,7 +33,9 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
       noProperties: 'Aucune propriété disponible',
       noPropertiesDesc: 'Commencez par ajouter votre première propriété',
       noResults: 'Aucun résultat trouvé',
-      noResultsDesc: 'Essayez de modifier vos critères de recherche'
+      noResultsDesc: 'Essayez de modifier vos critères de recherche',
+      galleryView: 'Vue galerie',
+      listView: 'Vue liste'
     },
     en: {
       management: 'Real Estate Management',
@@ -42,7 +48,9 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
       noProperties: 'No properties available',
       noPropertiesDesc: 'Start by adding your first property',
       noResults: 'No results found',
-      noResultsDesc: 'Try modifying your search criteria'
+      noResultsDesc: 'Try modifying your search criteria',
+      galleryView: 'Gallery view',
+      listView: 'List view'
     }
   };
 
@@ -52,6 +60,10 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     loadProperties();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('viewMode', viewMode);
+  }, [viewMode]);
 
   const loadProperties = async () => {
     try {
@@ -76,11 +88,22 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     navigate(`/property/${id}/edit`);
   };
 
+  const handleDelete = async (id: string) => {
+    if (window.confirm(language === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette propriété ?' : 'Are you sure you want to delete this property?')) {
+      try {
+        await propertyApi.delete(id);
+        loadProperties();
+      } catch (error) {
+        console.error('Error deleting property:', error);
+      }
+    }
+  };
+
   const handleAddNew = () => {
     navigate('/property/new');
   };
 
-  const handleFilter = (filters: { cities: string[], minPrice: string, maxPrice: string, minSurface: string, maxSurface: string }) => {
+  const handleFilter = (filters: { cities: string[], minPrice: string, maxPrice: string, minSurface: string, maxSurface: string, categories: string[], statuses: string[] }) => {
     let filtered = [...properties];
 
     // Cities filter
@@ -105,6 +128,20 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     filtered = filtered.filter(property => 
       property.surface >= minSurface && property.surface <= maxSurface
     );
+
+    // Category filter
+    if (filters.categories && filters.categories.length > 0) {
+      filtered = filtered.filter(property => 
+        filters.categories.includes(property.category)
+      );
+    }
+
+    // Status filter
+    if (filters.statuses && filters.statuses.length > 0) {
+      filtered = filtered.filter(property => 
+        filters.statuses.includes(property.status)
+      );
+    }
 
     setFilteredProperties(filtered);
   };
@@ -139,20 +176,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
 
   return (
     <div className="property-list-container">
-      <div className="property-list-header">
-        <div className="header-content">
-          <div className="header-text">
-            <span className="header-badge">{t.management}</span>
-            <h1 className="header-title">{t.title}</h1>
-            <p className="header-description">
-              {t.description}
-            </p>
-          </div>
-          <button onClick={handleAddNew} className="btn btn-add">
-            {t.addProperty}
-          </button>
-        </div>
-      </div>
+
 
       <PropertyFilter 
         onFilter={handleFilter}
@@ -161,7 +185,24 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
         properties={properties}
       />
 
-      <div className="properties-grid">
+      <div className="view-controls">
+        <div className="view-switcher">
+          <button 
+            className={`view-btn ${viewMode === 'gallery' ? 'active' : ''}`}
+            onClick={() => setViewMode('gallery')}
+          >
+            🔳 {t.galleryView}
+          </button>
+          <button 
+            className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
+            onClick={() => setViewMode('list')}
+          >
+            📋 {t.listView}
+          </button>
+        </div>
+      </div>
+
+      <div className={`properties-container ${viewMode}`}>
         {properties.length === 0 ? (
           <div className="empty-state">
             <div className="empty-icon">🏠</div>
@@ -182,13 +223,25 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
           </div>
         ) : (
           filteredProperties.map((property) => (
-            <PropertyCard
-              key={property.id}
-              property={property}
-              onView={handleView}
-              onEdit={handleEdit}
-              language={language}
-            />
+            viewMode === 'gallery' ? (
+              <PropertyCard
+                key={property.id}
+                property={property}
+                onView={handleView}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                language={language}
+              />
+            ) : (
+              <PropertyListCard
+                key={property.id}
+                property={property}
+                onView={handleView}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                language={language}
+              />
+            )
           ))
         )}
       </div>

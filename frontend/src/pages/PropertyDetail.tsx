@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Property } from '../types/Property';
+import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
 import { propertyApi } from '../services/api';
 import './PropertyDetail.css';
 
@@ -26,7 +26,20 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
       edit: 'Modifier cette propriété',
       loading: 'Chargement de la propriété...',
       notFound: 'Propriété non trouvée',
-      backToList: 'Retour à la liste'
+      backToList: 'Retour à la liste',
+      type: 'Type',
+      category: 'Catégorie',
+      status: 'Statut',
+      forSale: 'À vendre',
+      forRent: 'À louer',
+      apartment: 'Appartement',
+      house: 'Maison',
+      office: 'Bureau',
+      villa: 'Villa',
+      studio: 'Studio',
+      available: 'Disponible',
+      sold: 'Vendu',
+      rented: 'Loué'
     },
     en: {
       back: '← Back to list',
@@ -38,7 +51,20 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
       edit: 'Edit this property',
       loading: 'Loading property...',
       notFound: 'Property not found',
-      backToList: 'Back to list'
+      backToList: 'Back to list',
+      type: 'Type',
+      category: 'Category',
+      status: 'Status',
+      forSale: 'For Sale',
+      forRent: 'For Rent',
+      apartment: 'Apartment',
+      house: 'House',
+      office: 'Office',
+      villa: 'Villa',
+      studio: 'Studio',
+      available: 'Available',
+      sold: 'Sold',
+      rented: 'Rented'
     }
   };
 
@@ -81,6 +107,50 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
     }).format(price);
   };
 
+  const getCategoryIcon = (category: PropertyCategory) => {
+    const icons = {
+      [PropertyCategory.APARTMENT]: '🏢',
+      [PropertyCategory.HOUSE]: '🏠',
+      [PropertyCategory.OFFICE]: '🏢',
+      [PropertyCategory.VILLA]: '🏡',
+      [PropertyCategory.STUDIO]: '🏢'
+    };
+    return icons[category] || '🏠';
+  };
+
+  const getStatusColor = (status: PropertyStatus) => {
+    const colors = {
+      [PropertyStatus.AVAILABLE]: '#10b981',
+      [PropertyStatus.SOLD]: '#ef4444',
+      [PropertyStatus.RENTED]: '#f59e0b'
+    };
+    return colors[status] || '#10b981';
+  };
+
+  const getStatusText = (status: PropertyStatus) => {
+    const statusMap = {
+      [PropertyStatus.AVAILABLE]: t.available,
+      [PropertyStatus.SOLD]: t.sold,
+      [PropertyStatus.RENTED]: t.rented
+    };
+    return statusMap[status] || status;
+  };
+
+  const getTypeText = (type: PropertyType) => {
+    return type === PropertyType.SALE ? t.forSale : t.forRent;
+  };
+
+  const getCategoryText = (category: PropertyCategory) => {
+    const categoryMap = {
+      [PropertyCategory.APARTMENT]: t.apartment,
+      [PropertyCategory.HOUSE]: t.house,
+      [PropertyCategory.OFFICE]: t.office,
+      [PropertyCategory.VILLA]: t.villa,
+      [PropertyCategory.STUDIO]: t.studio
+    };
+    return categoryMap[category] || category;
+  };
+
   if (loading) {
     return (
       <div className="property-detail-container">
@@ -119,7 +189,16 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
         <div className="property-detail-content">
           <div className="property-header">
             <div className="property-badge">{t.detail}</div>
-            <h1 className="property-title">{property.title}</h1>
+            <div className="title-section">
+              <span className="category-icon">{getCategoryIcon(property.category)}</span>
+              <h1 className="property-title">{property.title}</h1>
+              <span 
+                className="status-badge" 
+                style={{ backgroundColor: getStatusColor(property.status) }}
+              >
+                {getStatusText(property.status)}
+              </span>
+            </div>
           </div>
 
           <div className="property-info-grid">
@@ -128,6 +207,22 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
               <div className="info-content">
                 <span className="info-label">{t.location}</span>
                 <span className="info-value">{property.city}</span>
+              </div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon">🏷️</div>
+              <div className="info-content">
+                <span className="info-label">{t.type}</span>
+                <span className="info-value">{getTypeText(property.type)}</span>
+              </div>
+            </div>
+
+            <div className="info-item">
+              <div className="info-icon">{getCategoryIcon(property.category)}</div>
+              <div className="info-content">
+                <span className="info-label">{t.category}</span>
+                <span className="info-value">{getCategoryText(property.category)}</span>
               </div>
             </div>
 

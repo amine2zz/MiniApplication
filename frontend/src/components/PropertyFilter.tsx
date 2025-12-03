@@ -7,6 +7,8 @@ interface FilterOptions {
   maxPrice: string;
   minSurface: string;
   maxSurface: string;
+  categories: string[];
+  statuses: string[];
 }
 
 interface PropertyFilterProps {
@@ -31,7 +33,9 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
     minPrice: minPrice.toString(),
     maxPrice: maxPrice.toString(),
     minSurface: minSurface.toString(),
-    maxSurface: maxSurface.toString()
+    maxSurface: maxSurface.toString(),
+    categories: [],
+    statuses: []
   });
 
   const [isExpanded, setIsExpanded] = useState(false);
@@ -56,7 +60,17 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
       maxPrice: 'Prix max',
       minSurface: 'Surface min',
       maxSurface: 'Surface max',
-      allCities: 'Toutes les villes'
+      allCities: 'Toutes les villes',
+      category: 'Catégorie',
+      status: 'Statut',
+      apartment: 'Appartement',
+      house: 'Maison',
+      office: 'Bureau',
+      villa: 'Villa',
+      studio: 'Studio',
+      available: 'Disponible',
+      sold: 'Vendu',
+      rented: 'Loué'
     },
     en: {
       searchPlaceholder: 'Search by city...',
@@ -70,7 +84,17 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
       maxPrice: 'Max price',
       minSurface: 'Min surface',
       maxSurface: 'Max surface',
-      allCities: 'All cities'
+      allCities: 'All cities',
+      category: 'Category',
+      status: 'Status',
+      apartment: 'Apartment',
+      house: 'House',
+      office: 'Office',
+      villa: 'Villa',
+      studio: 'Studio',
+      available: 'Available',
+      sold: 'Sold',
+      rented: 'Rented'
     }
   };
 
@@ -129,14 +153,29 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
       minPrice: minPrice.toString(), 
       maxPrice: maxPrice.toString(), 
       minSurface: minSurface.toString(), 
-      maxSurface: maxSurface.toString() 
+      maxSurface: maxSurface.toString(),
+      categories: [],
+      statuses: []
     });
     setCityInput('');
     onReset();
     setIsExpanded(false);
   };
 
+  const getCategoryIcon = (cat: string) => {
+    const icons = { apartment: '🏢', house: '🏠', office: '🏢', villa: '🏡', studio: '🏢' };
+    return icons[cat as keyof typeof icons] || '🏠';
+  };
 
+  const getCategoryText = (cat: string) => {
+    const texts = { apartment: t.apartment, house: t.house, office: t.office, villa: t.villa, studio: t.studio };
+    return texts[cat as keyof typeof texts] || cat;
+  };
+
+  const getStatusText = (status: string) => {
+    const texts = { available: t.available, sold: t.sold, rented: t.rented };
+    return texts[status as keyof typeof texts] || status;
+  };
 
   return (
     <div className="property-filter">
@@ -293,6 +332,74 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
                     className="range-max"
                   />
                 </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="filter-row">
+            <div className="filter-col">
+              <label>{t.category}</label>
+              <div className="filter-tags">
+                {filters.categories.map((category) => (
+                  <span key={category} className="filter-tag">
+                    {getCategoryIcon(category)} {getCategoryText(category)}
+                    <button onClick={() => {
+                      setFilters(prev => ({ 
+                        ...prev, 
+                        categories: prev.categories.filter(c => c !== category) 
+                      }));
+                    }}>×</button>
+                  </span>
+                ))}
+              </div>
+              <div className="filter-options">
+                {['apartment', 'house', 'office', 'villa', 'studio'].filter(cat => !filters.categories.includes(cat)).map((category) => (
+                  <button
+                    key={category}
+                    className="filter-option"
+                    onClick={() => {
+                      setFilters(prev => ({ 
+                        ...prev, 
+                        categories: [...prev.categories, category] 
+                      }));
+                    }}
+                  >
+                    {getCategoryText(category)}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
+            <div className="filter-col">
+              <label>{t.status}</label>
+              <div className="filter-tags">
+                {filters.statuses.map((status) => (
+                  <span key={status} className="filter-tag">
+                    🏷️ {getStatusText(status)}
+                    <button onClick={() => {
+                      setFilters(prev => ({ 
+                        ...prev, 
+                        statuses: prev.statuses.filter(s => s !== status) 
+                      }));
+                    }}>×</button>
+                  </span>
+                ))}
+              </div>
+              <div className="filter-options">
+                {['available', 'sold', 'rented'].filter(stat => !filters.statuses.includes(stat)).map((status) => (
+                  <button
+                    key={status}
+                    className="filter-option"
+                    onClick={() => {
+                      setFilters(prev => ({ 
+                        ...prev, 
+                        statuses: [...prev.statuses, status] 
+                      }));
+                    }}
+                  >
+                    {getStatusText(status)}
+                  </button>
+                ))}
               </div>
             </div>
           </div>
