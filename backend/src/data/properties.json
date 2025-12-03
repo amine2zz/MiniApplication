@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "1c5e81d3-4930-4c37-bf1b-3ccc1b46d0b6",
     "title": "Appartement moderne centre-ville",
     "city": "Paris",
     "price": 450000,
@@ -10,7 +10,7 @@
     "category": "apartment"
   },
   {
-    "id": "2",
+    "id": "8657b08b-32e4-4a99-87d6-182c7e5232e0",
     "title": "Maison avec jardin",
     "city": "Lyon",
     "price": 320000,
@@ -20,7 +20,7 @@
     "category": "house"
   },
   {
-    "id": "4",
+    "id": "a25fd771-44ca-4d4b-818d-c87546b0e4e3",
     "title": "Villa avec piscine",
     "city": "Nice",
     "price": 850000,
@@ -30,7 +30,7 @@
     "category": "apartment"
   },
   {
-    "id": "5",
+    "id": "bda74ebb-50ea-406c-92ad-beee5e78cc84",
     "title": "Bureau moderne2",
     "city": "Bordeaux",
     "price": 7000,
@@ -40,7 +40,7 @@
     "category": "office"
   },
   {
-    "id": "6",
+    "id": "05eff107-935b-49b5-b2e4-623c6684f447",
     "title": "Duplex avec terrasse",
     "city": "Toulouse",
     "price": 380000,
@@ -50,7 +50,7 @@
     "category": "apartment"
   },
   {
-    "id": "7",
+    "id": "cf123c96-4d38-439d-9a24-e6a93f781ff0",
     "title": "Penthouse vue mer",
     "city": "Cannes",
     "price": 1200000,
@@ -58,15 +58,5 @@
     "type": "sale",
     "status": "available",
     "category": "apartment"
-  },
-  {
-    "id": "a25fd771-44ca-4d4b-818d-c87546b0e4e3",
-    "title": "abc",
-    "city": "Tunis",
-    "price": 10000,
-    "surface": 1,
-    "type": "sale",
-    "category": "apartment",
-    "status": "available"
   }
 ]

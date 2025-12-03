@@ -104,12 +104,18 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  transform: scale(1);
+}
+
+.view-btn:active {
+  transform: scale(0.95);
 }
 
 .view-btn.active {
   background: #0085ff;
   color: white;
   box-shadow: 0 2px 8px rgba(0, 133, 255, 0.3);
+  transform: scale(1.05);
 }
 
 .view-btn:hover:not(.active) {

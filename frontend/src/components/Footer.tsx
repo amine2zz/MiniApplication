@@ -30,7 +30,10 @@ const Footer: React.FC<FooterProps> = ({ language }) => {
       <div className="footer-container">
         <div className="footer-content">
           <div className="footer-brand">
-            <h3 className="footer-title">{t.title}</h3>
+            <div className="footer-brand-header">
+              <img src="/LogoWhite.png" alt="Logo" className="footer-logo" />
+              <h3 className="footer-title">{t.title}</h3>
+            </div>
             <p className="footer-description">{t.description}</p>
           </div>
           

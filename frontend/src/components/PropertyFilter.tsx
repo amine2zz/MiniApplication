@@ -177,6 +177,11 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
     return texts[status as keyof typeof texts] || status;
   };
 
+  const getStatusIcon = (status: string) => {
+    const icons = { available: '✅', sold: '🔒', rented: '🏠' };
+    return icons[status as keyof typeof icons] || '📋';
+  };
+
   return (
     <div className="property-filter">
       <div className="search-bar">
@@ -375,7 +380,7 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
               <div className="filter-tags">
                 {filters.statuses.map((status) => (
                   <span key={status} className="filter-tag">
-                    🏷️ {getStatusText(status)}
+                    {getStatusIcon(status)} {getStatusText(status)}
                     <button onClick={() => {
                       setFilters(prev => ({ 
                         ...prev, 

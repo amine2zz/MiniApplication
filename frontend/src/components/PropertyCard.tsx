@@ -39,13 +39,13 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
 
   const getCategoryIcon = (category: PropertyCategory) => {
     const icons = {
-      [PropertyCategory.APARTMENT]: '🏢',
-      [PropertyCategory.HOUSE]: '🏠',
-      [PropertyCategory.OFFICE]: '🏢',
-      [PropertyCategory.VILLA]: '🏡',
-      [PropertyCategory.STUDIO]: '🏢'
+      [PropertyCategory.APARTMENT]: <i className="fas fa-building"></i>,
+      [PropertyCategory.HOUSE]: <i className="fas fa-home"></i>,
+      [PropertyCategory.OFFICE]: <i className="fas fa-briefcase"></i>,
+      [PropertyCategory.VILLA]: <i className="fas fa-crown"></i>,
+      [PropertyCategory.STUDIO]: <i className="fas fa-door-open"></i>
     };
-    return icons[category] || '🏠';
+    return icons[category] || <i className="fas fa-building"></i>;
   };
 
 
@@ -59,6 +59,15 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
     return statusMap[status] || status;
   };
 
+  const getStatusIcon = (status: PropertyStatus) => {
+    const iconMap = {
+      [PropertyStatus.AVAILABLE]: '✅',
+      [PropertyStatus.SOLD]: '🔒',
+      [PropertyStatus.RENTED]: '🏠'
+    };
+    return iconMap[status] || '📋';
+  };
+
   const getTypeText = (type: PropertyType) => {
     return type === PropertyType.SALE ? t.forSale : t.forRent;
   };
@@ -69,7 +78,8 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
         <div className="property-header">
           <span className="category-icon">{getCategoryIcon(property.category)}</span>
           <h3 className="property-title">{property.title}</h3>
-          <span className="status-badge">
+          <span className={`status-badge ${property.status}`}>
+            <span>{getStatusIcon(property.status)}</span>
             {getStatusText(property.status)}
           </span>
         </div>

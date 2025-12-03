@@ -92,6 +92,7 @@ npm install
 # 3️⃣ Installation Frontend
 cd ../frontend
 npm install
+npm install eslint-plugin-react-hooks --save-dev
 ```
 
 ### 🔄 Lancement en développement

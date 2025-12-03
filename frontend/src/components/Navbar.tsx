@@ -31,8 +31,11 @@ const Navbar: React.FC<NavbarProps> = ({ language, onLanguageChange }) => {
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-brand" onClick={() => navigate('/')}>
-          <h1 className="brand-title">{t.title}</h1>
-          <span className="brand-subtitle">{t.subtitle}</span>
+          <img src="/LogoWhite.png" alt="Logo" className="brand-logo" />
+          <div className="brand-text">
+            <h1 className="brand-title">{t.title}</h1>
+            <span className="brand-subtitle">{t.subtitle}</span>
+          </div>
         </div>
         
         <div className="navbar-menu">

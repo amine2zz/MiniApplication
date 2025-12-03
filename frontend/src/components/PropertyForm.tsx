@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Property, CreatePropertyDTO, UpdatePropertyDTO, PropertyType, PropertyCategory, PropertyStatus } from '../types/Property';
+import { Property, CreatePropertyDTO, UpdatePropertyDTO, PropertyType, PropertyCategory, PropertyStatus, FRENCH_CITIES_LIST } from '../types/Property';
 import './PropertyForm.css';
 
 interface PropertyFormProps {
@@ -116,6 +116,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       newErrors.title = t.titleRequired;
     } else if (formData.title.trim().length < 3) {
       newErrors.title = language === 'fr' ? 'Le titre doit contenir au moins 3 caractères' : 'Title must be at least 3 characters';
+    } else if (/^\d+$/.test(formData.title.trim())) {
+      newErrors.title = language === 'fr' ? 'Le titre ne peut pas contenir uniquement des chiffres' : 'Title cannot contain only numbers';
     }
 
     if (!formData.city.trim()) {
@@ -201,15 +203,20 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
 
         <div className="form-group">
           <label htmlFor="city" className="form-label">{t.city} *</label>
-          <input
-            type="text"
+          <select
             id="city"
             name="city"
             value={formData.city}
-            onChange={handleChange}
+            onChange={(e) => setFormData(prev => ({ ...prev, city: e.target.value }))}
             className={`form-input ${errors.city ? 'error' : ''}`}
-            placeholder={t.cityPlaceholder}
-          />
+          >
+            <option value="">{language === 'fr' ? 'Sélectionner une ville' : 'Select a city'}</option>
+            {FRENCH_CITIES_LIST.map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
           {errors.city && <span className="error-message">{errors.city}</span>}
         </div>
 
@@ -226,7 +233,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
               placeholder="450000"
               min="1000"
               max="10000000"
-              step="1000"
+              step="100"
             />
             {errors.price && <span className="error-message">{errors.price}</span>}
           </div>
