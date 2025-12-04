@@ -11,19 +11,17 @@ const api = axios.create({
 });
 
 export const propertyApi = {
-  // Récupérer toutes les propriétés
   getAll: async (): Promise<Property[]> => {
     const response = await api.get<Property[]>('/items');
     return response.data;
   },
 
-  // Récupérer une propriété par ID
+
   getById: async (id: string): Promise<Property> => {
     const response = await api.get<Property>(`/items/${id}`);
     return response.data;
   },
 
-  // Créer une nouvelle propriété
   create: async (property: CreatePropertyDTO): Promise<Property> => {
     try {
       const response = await api.post<Property>('/items', property);
@@ -34,7 +32,6 @@ export const propertyApi = {
     }
   },
 
-  // Mettre à jour une propriété
   update: async (id: string, property: UpdatePropertyDTO): Promise<Property> => {
     try {
       const response = await api.put<Property>(`/items/${id}`, property);
@@ -45,7 +42,6 @@ export const propertyApi = {
     }
   },
 
-  // Supprimer une propriété
   delete: async (id: string): Promise<void> => {
     try {
       await api.delete(`/items/${id}`);

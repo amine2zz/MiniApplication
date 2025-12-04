@@ -26,9 +26,18 @@ class PropertyService implements IPropertyService {
     fs.writeFileSync(this.dataPath, JSON.stringify(properties, null, 2));
   }
 
+  private isTitleUnique(title: string, excludeId?: string): boolean {
+    const properties = this.loadProperties();
+    return !properties.some(property => 
+      property.title.toLowerCase() === title.toLowerCase() && 
+      property.id !== excludeId
+    );
+  }
+
   getAllProperties(): Property[] {
     return this.loadProperties();
   }
+
 
   getPropertyById(id: string): Property | undefined {
     const properties = this.loadProperties();
@@ -36,6 +45,10 @@ class PropertyService implements IPropertyService {
   }
 
   createProperty(propertyData: CreatePropertyDTO): Property {
+    if (!this.isTitleUnique(propertyData.title)) {
+      throw new Error(`Une propriété avec le titre "${propertyData.title}" existe déjà`);
+    }
+
     const properties = this.loadProperties();
     const newProperty: Property = {
       id: uuidv4(),
@@ -53,6 +66,11 @@ class PropertyService implements IPropertyService {
     const propertyIndex = properties.findIndex(property => property.id === id);
     if (propertyIndex === -1) {
       return null;
+    }
+
+    // Vérifier l'unicité du titre si le titre est modifié
+    if (propertyData.title && !this.isTitleUnique(propertyData.title, id)) {
+      throw new Error(`Une propriété avec le titre "${propertyData.title}" existe déjà`);
     }
 
     properties[propertyIndex] = {

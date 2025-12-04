@@ -2,11 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Property } from '../types/Property';
 import { propertyApi } from '../services/api';
-import PropertyCard from '../components/PropertyCard';
-import PropertyListCard from '../components/PropertyListCard';
-import PropertyFilter from '../components/PropertyFilter';
-import { ConfirmationDialog } from '../components/ConfirmationDialog';
-import { Pagination } from '../components/Pagination';
+import { PropertyCard, PropertyListCard, PropertyFilter } from '../components/property';
+import { ConfirmationDialog, Pagination } from '../components/ui';
 import './PropertyList.css';
 
 interface PropertyListProps {

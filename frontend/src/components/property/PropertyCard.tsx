@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Property, PropertyStatus, PropertyType } from '../types/Property';
-import { getCategoryIcon, getStatusIcon } from '../utils/icons';
+import { Property, PropertyStatus, PropertyType } from '../../types/Property';
+import { getCategoryIcon, getStatusIcon } from '../../utils/icons';
 import './PropertyCard.css';
-import './ImageDots.css';
+import '../media/ImageDots.css';
 
 interface PropertyCardProps {
   property: Property;

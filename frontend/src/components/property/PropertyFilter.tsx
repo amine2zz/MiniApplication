@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { getCategoryIconFilter, getStatusIconFilter } from '../utils/icons';
+import { getCategoryIconFilter, getStatusIconFilter } from '../../utils/icons';
 import './PropertyFilter.css';
 
 interface FilterOptions {

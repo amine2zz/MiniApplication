@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Property, CreatePropertyDTO, UpdatePropertyDTO } from '../types/Property';
 import { propertyApi } from '../services/api';
-import PropertyForm from '../components/PropertyForm';
+import { PropertyForm } from '../components/property';
 import './PropertyFormPage.css';
 
 interface PropertyFormPageProps {
@@ -85,8 +85,10 @@ const PropertyFormPage: React.FC<PropertyFormPageProps> = ({ language }) => {
         const newProperty = await propertyApi.create(data as CreatePropertyDTO);
         navigate(`/property/${newProperty.id}`);
       }
-    } catch (err) {
-      setError(t.saveError);
+    } catch (err: any) {
+      // Afficher le message d'erreur spécifique du serveur si disponible
+      const errorMessage = err.response?.data?.error || t.saveError;
+      setError(errorMessage);
       console.error('Error saving property:', err);
     } finally {
       setSubmitting(false);

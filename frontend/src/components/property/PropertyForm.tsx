@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Property, CreatePropertyDTO, UpdatePropertyDTO, PropertyType, PropertyCategory, PropertyStatus, FRENCH_CITIES_LIST } from '../types/Property';
-import ImageGallery from './ImageGallery';
+import { Property, CreatePropertyDTO, UpdatePropertyDTO, PropertyType, PropertyCategory, PropertyStatus, FRENCH_CITIES_LIST } from '../../types/Property';
+import { ImageGallery } from '../media';
 import './PropertyForm.css';
 
 interface PropertyFormProps {

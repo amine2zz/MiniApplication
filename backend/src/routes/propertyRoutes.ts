@@ -56,6 +56,9 @@ export async function propertyRoutes(fastify: FastifyInstance) {
       if (error.name === 'ZodError') {
         return reply.code(400).send({ error: 'Données invalides', details: error.errors });
       }
+      if (error.message.includes('existe déjà')) {
+        return reply.code(409).send({ error: error.message });
+      }
       return reply.code(500).send({ error: 'Erreur serveur' });
     }
   });
@@ -76,6 +79,9 @@ export async function propertyRoutes(fastify: FastifyInstance) {
     } catch (error: any) {
       if (error.name === 'ZodError') {
         return reply.code(400).send({ error: 'Données invalides', details: error.errors });
+      }
+      if (error.message.includes('existe déjà')) {
+        return reply.code(409).send({ error: error.message });
       }
       return reply.code(500).send({ error: 'Erreur serveur' });
     }

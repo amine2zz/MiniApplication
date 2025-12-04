@@ -3,7 +3,7 @@ import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
 import { getCategoryIcon } from '../utils/icons';
 import { propertyApi } from '../services/api';
-import ImageGallery from '../components/ImageGallery';
+import { ImageGallery } from '../components/media';
 import './PropertyDetail.css';
 
 interface PropertyDetailProps {
