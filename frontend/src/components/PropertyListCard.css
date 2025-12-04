@@ -56,14 +56,8 @@
 }
 
 .list-card-image .no-image-text i {
-  font-size: 1rem;
+  font-size: 2rem;
   opacity: 0.4;
-}
-
-.list-card-image .no-image-text span {
-  font-size: 0.6rem;
-  font-weight: 500;
-  opacity: 0.7;
 }
 
 .list-card-image img {

@@ -263,7 +263,6 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
                       onChange={(e) => handleInputChange('minPrice', e.target.value)}
                       className="range-input"
                     />
-                    <span>€</span>
                   </div>
                   <div className="range-value-group">
                     <input 
@@ -272,7 +271,6 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
                       onChange={(e) => handleInputChange('maxPrice', e.target.value)}
                       className="range-input"
                     />
-                    <span>€</span>
                   </div>
                 </div>
                 <div className="dual-range">
@@ -314,7 +312,6 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
                       onChange={(e) => handleInputChange('minSurface', e.target.value)}
                       className="range-input"
                     />
-                    <span>m²</span>
                   </div>
                   <div className="range-value-group">
                     <input 
@@ -323,7 +320,6 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
                       onChange={(e) => handleInputChange('maxSurface', e.target.value)}
                       className="range-input"
                     />
-                    <span>m²</span>
                   </div>
                 </div>
                 <div className="dual-range">

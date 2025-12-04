@@ -45,7 +45,7 @@
   },
   {
     "id": "bda74ebb-50ea-406c-92ad-beee5e78cc84",
-    "title": "Bureau moderne",
+    "title": "Bureau Moderne",
     "city": "Bordeaux",
     "price": 7000,
     "surface": 90,
@@ -109,22 +109,21 @@
     "images": [
       "http://localhost:3001/uploads/1764848795021-epekrl.png",
       "http://localhost:3001/uploads/1764848801060-0el2c.png",
-      "http://localhost:3001/uploads/1764850346136-1pb0sb.png"
+      "http://localhost:3001/uploads/1764850346136-1pb0sb.png",
+      "http://localhost:3001/uploads/1764856819510-8fad5y.png"
     ],
     "status": "available"
   },
   {
-    "id": "d7bf09e3-faa3-4305-a5cb-39bec22bb545",
+    "id": "38413c1d-1cc3-40bb-a968-b3eb3c18575d",
     "title": "Property 3",
-    "city": "Rennes",
-    "price": 500000,
-    "surface": 71,
+    "city": "Aulnay-sous-Bois",
+    "price": 45000,
+    "surface": 796,
     "type": "rent",
-    "category": "office",
+    "category": "house",
     "images": [
-      "http://localhost:3001/uploads/1764852060580-syq9um.png",
-      "http://localhost:3001/uploads/1764852067448-whwlsw.png",
-      "http://localhost:3001/uploads/1764852075439-cdie5f.png"
+      "http://localhost:3001/uploads/1764856844741-z9t8im.png"
     ],
     "status": "available"
   }

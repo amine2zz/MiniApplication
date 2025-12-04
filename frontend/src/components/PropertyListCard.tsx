@@ -101,7 +101,6 @@ const PropertyListCard: React.FC<PropertyListCardProps> = ({ property, onView, o
         <div className="list-card-image no-image-placeholder">
           <div className="no-image-text">
             <i className="fas fa-image"></i>
-            <span>{language === 'fr' ? 'Aucune image disponible' : 'No images available'}</span>
           </div>
         </div>
       )}

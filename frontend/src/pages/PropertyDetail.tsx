@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
 import { getCategoryIcon } from '../utils/icons';
 import { propertyApi } from '../services/api';
@@ -13,6 +13,7 @@ interface PropertyDetailProps {
 const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -98,7 +99,13 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
   };
 
   const handleBack = () => {
-    navigate('/');
+    // Récupérer la page de retour depuis les paramètres URL
+    const returnPage = searchParams.get('returnPage');
+    if (returnPage) {
+      navigate(`/?page=${returnPage}`);
+    } else {
+      navigate('/');
+    }
   };
 
   const formatPrice = (price: number) => {

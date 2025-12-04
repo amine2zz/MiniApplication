@@ -3,7 +3,6 @@ import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import staticFiles from '@fastify/static';
 import { propertyRoutes } from './routes/propertyRoutes';
-import { uploadRoutes } from './routes/uploadRoutes';
 import * as path from 'path';
 
 const fastify = Fastify({
@@ -28,7 +27,6 @@ const start = async () => {
 
     // Enregistrement des routes
     await fastify.register(propertyRoutes);
-    await fastify.register(uploadRoutes);
 
     // Démarrage du serveur
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;

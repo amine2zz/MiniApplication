@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Property } from '../types/Property';
 import { propertyApi } from '../services/api';
 import PropertyCard from '../components/PropertyCard';
 import PropertyListCard from '../components/PropertyListCard';
 import PropertyFilter from '../components/PropertyFilter';
+import { ConfirmationDialog } from '../components/ConfirmationDialog';
+import { Pagination } from '../components/Pagination';
 import './PropertyList.css';
 
 interface PropertyListProps {
@@ -12,11 +14,21 @@ interface PropertyListProps {
 }
 
 const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [properties, setProperties] = useState<Property[]>([]);
   const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
+  const [paginatedProperties, setPaginatedProperties] = useState<Property[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [viewMode, setViewMode] = useState<'gallery' | 'list'>('gallery');
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [propertyToDelete, setPropertyToDelete] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(() => {
+    // Récupérer la page depuis les paramètres URL ou défaut à 1
+    const pageParam = searchParams.get('page');
+    return pageParam ? parseInt(pageParam, 10) : 1;
+  });
+  const [itemsPerPage] = useState(6);
 
   const navigate = useNavigate();
 
@@ -34,7 +46,11 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
       noResults: 'Aucun résultat trouvé',
       noResultsDesc: 'Essayez de modifier vos critères de recherche',
       gallery: 'Galerie',
-      list: 'Liste'
+      list: 'Liste',
+      deleteTitle: 'Supprimer la propriété',
+      deleteMessage: 'Êtes-vous sûr de vouloir supprimer cette propriété ? Cette action est irréversible.',
+      confirm: 'Supprimer',
+      cancel: 'Annuler'
 
     },
     en: {
@@ -50,7 +66,11 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
       noResults: 'No results found',
       noResultsDesc: 'Try modifying your search criteria',
       gallery: 'Gallery',
-      list: 'List'
+      list: 'List',
+      deleteTitle: 'Delete Property',
+      deleteMessage: 'Are you sure you want to delete this property? This action cannot be undone.',
+      confirm: 'Delete',
+      cancel: 'Cancel'
 
     }
   };
@@ -61,6 +81,29 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     loadProperties();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Effet pour mettre à jour les propriétés paginées
+  useEffect(() => {
+    updatePaginatedProperties();
+  }, [filteredProperties, currentPage, itemsPerPage]);
+
+  const updatePaginatedProperties = () => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    setPaginatedProperties(filteredProperties.slice(startIndex, endIndex));
+  };
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+    // Mettre à jour l'URL avec la nouvelle page
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('page', page.toString());
+      return newParams;
+    });
+    // Scroll vers le haut lors du changement de page
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
 
 
@@ -80,7 +123,8 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
   };
 
   const handleView = (id: string) => {
-    navigate(`/property/${id}`);
+    // Préserver la page actuelle dans l'URL lors de la navigation
+    navigate(`/property/${id}?returnPage=${currentPage}`);
   };
 
   const handleEdit = (id: string) => {
@@ -88,14 +132,26 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm(language === 'fr' ? 'Êtes-vous sûr de vouloir supprimer cette propriété ?' : 'Are you sure you want to delete this property?')) {
+    setPropertyToDelete(id);
+    setShowDeleteDialog(true);
+  };
+
+  const confirmDelete = async () => {
+    if (propertyToDelete) {
       try {
-        await propertyApi.delete(id);
+        await propertyApi.delete(propertyToDelete);
         loadProperties();
       } catch (error) {
         console.error('Error deleting property:', error);
       }
     }
+    setShowDeleteDialog(false);
+    setPropertyToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteDialog(false);
+    setPropertyToDelete(null);
   };
 
   const handleAddNew = () => {
@@ -143,10 +199,24 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     }
 
     setFilteredProperties(filtered);
+    // Réinitialiser à la première page lors du filtrage et mettre à jour l'URL
+    setCurrentPage(1);
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('page', '1');
+      return newParams;
+    });
   };
 
   const handleResetFilter = () => {
     setFilteredProperties(properties);
+    // Réinitialiser à la première page lors de la réinitialisation et mettre à jour l'URL
+    setCurrentPage(1);
+    setSearchParams(prev => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('page', '1');
+      return newParams;
+    });
   };
 
   if (loading) {
@@ -208,7 +278,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
         </div>
       ) : (
         <div className={`properties-container ${viewMode}`}>
-          {filteredProperties.map((property) => (
+          {paginatedProperties.map((property) => (
             viewMode === 'gallery' ? (
               <PropertyCard
                 key={property.id}
@@ -231,6 +301,27 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
           ))}
         </div>
       )}
+
+      {filteredProperties.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalItems={filteredProperties.length}
+          itemsPerPage={itemsPerPage}
+          onPageChange={handlePageChange}
+          language={language}
+        />
+      )}
+
+      <ConfirmationDialog
+        isOpen={showDeleteDialog}
+        title={t.deleteTitle}
+        message={t.deleteMessage}
+        confirmText={t.confirm}
+        cancelText={t.cancel}
+        onConfirm={confirmDelete}
+        onCancel={cancelDelete}
+        type="danger"
+      />
     </div>
   );
 };
