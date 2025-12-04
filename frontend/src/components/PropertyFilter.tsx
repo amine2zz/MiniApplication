@@ -19,9 +19,10 @@ interface PropertyFilterProps {
   properties: Array<{city: string; price: number; surface: number}>;
   viewMode: 'gallery' | 'list';
   onViewModeChange: (mode: 'gallery' | 'list') => void;
+  initialFilters?: FilterOptions;
 }
 
-const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, language, properties, viewMode, onViewModeChange }) => {
+const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, language, properties, viewMode, onViewModeChange, initialFilters }) => {
   const cities = Array.from(new Set(properties.map(p => p.city))).sort();
   const prices = properties.map(p => p.price).sort((a, b) => a - b);
   const surfaces = properties.map(p => p.surface).sort((a, b) => a - b);
@@ -31,14 +32,25 @@ const PropertyFilter: React.FC<PropertyFilterProps> = ({ onFilter, onReset, lang
   const minSurface = surfaces[0] || 0;
   const maxSurface = surfaces[surfaces.length - 1] || 500;
 
-  const [filters, setFilters] = useState<FilterOptions>({
-    cities: [],
-    minPrice: minPrice.toString(),
-    maxPrice: maxPrice.toString(),
-    minSurface: minSurface.toString(),
-    maxSurface: maxSurface.toString(),
-    categories: [],
-    statuses: []
+  const [filters, setFilters] = useState<FilterOptions>(() => {
+    if (initialFilters) {
+      return {
+        ...initialFilters,
+        minPrice: initialFilters.minPrice || minPrice.toString(),
+        maxPrice: initialFilters.maxPrice || maxPrice.toString(),
+        minSurface: initialFilters.minSurface || minSurface.toString(),
+        maxSurface: initialFilters.maxSurface || maxSurface.toString()
+      };
+    }
+    return {
+      cities: [],
+      minPrice: minPrice.toString(),
+      maxPrice: maxPrice.toString(),
+      minSurface: minSurface.toString(),
+      maxSurface: maxSurface.toString(),
+      categories: [],
+      statuses: []
+    };
   });
 
   const [isExpanded, setIsExpanded] = useState(false);

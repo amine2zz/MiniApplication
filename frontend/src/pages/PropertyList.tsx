@@ -29,6 +29,26 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     return pageParam ? parseInt(pageParam, 10) : 1;
   });
   const [itemsPerPage] = useState(6);
+  const [currentFilters, setCurrentFilters] = useState(() => {
+    // Récupérer les filtres depuis les paramètres URL
+    const citiesParam = searchParams.get('cities');
+    const minPriceParam = searchParams.get('minPrice');
+    const maxPriceParam = searchParams.get('maxPrice');
+    const minSurfaceParam = searchParams.get('minSurface');
+    const maxSurfaceParam = searchParams.get('maxSurface');
+    const categoriesParam = searchParams.get('categories');
+    const statusesParam = searchParams.get('statuses');
+    
+    return {
+      cities: citiesParam ? citiesParam.split(',') : [],
+      minPrice: minPriceParam || '',
+      maxPrice: maxPriceParam || '',
+      minSurface: minSurfaceParam || '',
+      maxSurface: maxSurfaceParam || '',
+      categories: categoriesParam ? categoriesParam.split(',') : [],
+      statuses: statusesParam ? statusesParam.split(',') : []
+    };
+  });
 
   const navigate = useNavigate();
 
@@ -82,6 +102,14 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Appliquer les filtres au chargement si des paramètres sont présents dans l'URL
+  useEffect(() => {
+    if (properties.length > 0) {
+      applyFilters(currentFilters);
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [properties]);
+
   // Effet pour mettre à jour les propriétés paginées
   useEffect(() => {
     updatePaginatedProperties();
@@ -123,8 +151,9 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
   };
 
   const handleView = (id: string) => {
-    // Préserver la page actuelle dans l'URL lors de la navigation
-    navigate(`/property/${id}?returnPage=${currentPage}`);
+    // Préserver la page actuelle et les filtres dans l'URL lors de la navigation
+    const currentSearch = searchParams.toString();
+    navigate(`/property/${id}?${currentSearch}`);
   };
 
   const handleEdit = (id: string) => {
@@ -158,7 +187,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     navigate('/property/new');
   };
 
-  const handleFilter = (filters: { cities: string[], minPrice: string, maxPrice: string, minSurface: string, maxSurface: string, categories: string[], statuses: string[] }) => {
+  const applyFilters = (filters: { cities: string[], minPrice: string, maxPrice: string, minSurface: string, maxSurface: string, categories: string[], statuses: string[] }) => {
     let filtered = [...properties];
 
     // Cities filter
@@ -199,24 +228,59 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
     }
 
     setFilteredProperties(filtered);
-    // Réinitialiser à la première page lors du filtrage et mettre à jour l'URL
+  };
+
+  const handleFilter = (filters: { cities: string[], minPrice: string, maxPrice: string, minSurface: string, maxSurface: string, categories: string[], statuses: string[] }) => {
+    setCurrentFilters(filters);
+    applyFilters(filters);
+    
+    // Réinitialiser à la première page lors du filtrage et mettre à jour l'URL avec les filtres
     setCurrentPage(1);
-    setSearchParams(prev => {
-      const newParams = new URLSearchParams(prev);
+    setSearchParams(() => {
+      const newParams = new URLSearchParams();
       newParams.set('page', '1');
+      
+      if (filters.cities.length > 0) {
+        newParams.set('cities', filters.cities.join(','));
+      }
+      if (filters.minPrice) {
+        newParams.set('minPrice', filters.minPrice);
+      }
+      if (filters.maxPrice) {
+        newParams.set('maxPrice', filters.maxPrice);
+      }
+      if (filters.minSurface) {
+        newParams.set('minSurface', filters.minSurface);
+      }
+      if (filters.maxSurface) {
+        newParams.set('maxSurface', filters.maxSurface);
+      }
+      if (filters.categories.length > 0) {
+        newParams.set('categories', filters.categories.join(','));
+      }
+      if (filters.statuses.length > 0) {
+        newParams.set('statuses', filters.statuses.join(','));
+      }
+      
       return newParams;
     });
   };
 
   const handleResetFilter = () => {
+    const emptyFilters = {
+      cities: [],
+      minPrice: '',
+      maxPrice: '',
+      minSurface: '',
+      maxSurface: '',
+      categories: [],
+      statuses: []
+    };
+    setCurrentFilters(emptyFilters);
     setFilteredProperties(properties);
-    // Réinitialiser à la première page lors de la réinitialisation et mettre à jour l'URL
+    // Réinitialiser à la première page et supprimer tous les filtres de l'URL
     setCurrentPage(1);
-    setSearchParams(prev => {
-      const newParams = new URLSearchParams(prev);
-      newParams.set('page', '1');
-      return newParams;
-    });
+    setSearchParams({ page: '1' });
   };
 
   if (loading) {
@@ -252,6 +316,7 @@ const PropertyList: React.FC<PropertyListProps> = ({ language }) => {
         properties={properties}
         viewMode={viewMode}
         onViewModeChange={setViewMode}
+        initialFilters={currentFilters}
       />
 
 

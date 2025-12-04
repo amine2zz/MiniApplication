@@ -99,10 +99,20 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
   };
 
   const handleBack = () => {
-    // Récupérer la page de retour depuis les paramètres URL
-    const returnPage = searchParams.get('returnPage');
-    if (returnPage) {
-      navigate(`/?page=${returnPage}`);
+    // Récupérer tous les paramètres URL pour préserver les filtres et la page
+    const urlParams = new URLSearchParams();
+    
+    // Copier tous les paramètres existants sauf ceux spécifiques à la vue détail
+    searchParams.forEach((value, key) => {
+      if (!key.startsWith('returnPage')) {
+        urlParams.set(key, value);
+      }
+    });
+    
+    // Si pas de paramètres, aller à la page d'accueil
+    const queryString = urlParams.toString();
+    if (queryString) {
+      navigate(`/?${queryString}`);
     } else {
       navigate('/');
     }

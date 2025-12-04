@@ -1,4 +1,5 @@
 import { FastifyInstance, FastifyRequest, FastifyReply } from 'fastify';
+import { IPropertyService } from '../interfaces/IPropertyService';
 import { propertyService } from '../services/propertyService';
 import { pipeline } from 'stream';
 import { promisify } from 'util';
