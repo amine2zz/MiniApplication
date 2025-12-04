@@ -1,7 +1,8 @@
-import React from 'react';
-import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
+import React, { useState } from 'react';
+import { Property, PropertyStatus, PropertyType } from '../types/Property';
 import { getCategoryIcon, getStatusIcon } from '../utils/icons';
 import './PropertyListCard.css';
+import './ImageDots.css';
 
 interface PropertyListCardProps {
   property: Property;
@@ -12,6 +13,8 @@ interface PropertyListCardProps {
 }
 
 const PropertyListCard: React.FC<PropertyListCardProps> = ({ property, onView, onEdit, onDelete, language }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
   const texts = {
     fr: {
       view: 'Voir',
@@ -58,9 +61,50 @@ const PropertyListCard: React.FC<PropertyListCardProps> = ({ property, onView, o
 
   return (
     <div className="property-list-card">
-      <div className="list-card-icon">
-        {getCategoryIcon(property.category)}
-      </div>
+      {property.images && property.images.length > 0 ? (
+        <div className="list-card-image">
+          <img 
+            src={property.images[currentImageIndex]} 
+            alt={property.title}
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.style.display = 'none';
+              const parent = target.parentElement;
+              if (parent) {
+                parent.innerHTML = `<div class="list-card-icon">${getCategoryIcon(property.category)}</div>`;
+              }
+            }}
+          />
+          {property.images.length > 1 && (
+            <>
+              <div className="list-image-count">
+                <i className="fas fa-images"></i>
+                {property.images.length}
+              </div>
+              <div className="list-card-image-dots">
+                {property.images.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`list-card-dot ${index === currentImageIndex ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentImageIndex(index);
+                    }}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="list-card-image no-image-placeholder">
+          <div className="no-image-text">
+            <i className="fas fa-image"></i>
+            <span>{language === 'fr' ? 'Aucune image disponible' : 'No images available'}</span>
+          </div>
+        </div>
+      )}
       
       <div className="list-card-content">
         <div className="list-card-header">

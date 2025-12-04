@@ -1,7 +1,8 @@
-import React from 'react';
-import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
+import React, { useState } from 'react';
+import { Property, PropertyStatus, PropertyType } from '../types/Property';
 import { getCategoryIcon, getStatusIcon } from '../utils/icons';
 import './PropertyCard.css';
+import './ImageDots.css';
 
 interface PropertyCardProps {
   property: Property;
@@ -12,6 +13,8 @@ interface PropertyCardProps {
 }
 
 const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, onDelete, language }) => {
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  
   const texts = {
     fr: {
       view: 'Voir',
@@ -59,16 +62,50 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
 
   return (
     <div className="property-card">
+      {property.images && property.images.length > 0 ? (
+        <div className="property-image">
+          <img 
+            src={property.images[currentImageIndex]} 
+            alt={property.title}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = 'none';
+            }}
+          />
+          {property.images.length > 1 && (
+            <>
+              <div className="image-count">
+                <i className="fas fa-images"></i>
+                {property.images.length}
+              </div>
+              <div className="card-image-dots">
+                {property.images.map((_, index) => (
+                  <button
+                    key={index}
+                    className={`card-dot ${index === currentImageIndex ? 'active' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setCurrentImageIndex(index);
+                    }}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      ) : (
+        <div className="property-image no-image-placeholder">
+          <div className="no-image-text">
+            <i className="fas fa-image"></i>
+            <span>{language === 'fr' ? 'Aucune image disponible' : 'No images available'}</span>
+          </div>
+        </div>
+      )}
       <div className="property-card-content">
         <div className="property-header">
           <div className="property-title-row">
-            <span className="category-icon">{getCategoryIcon(property.category)}</span>
             <h3 className="property-title">{property.title}</h3>
           </div>
-          <span className={`status-badge ${property.status}`}>
-            {getStatusIcon(property.status)}
-            {getStatusText(property.status)}
-          </span>
         </div>
         <div className="property-details">
           <div className="property-details-left">
@@ -78,6 +115,10 @@ const PropertyCard: React.FC<PropertyCardProps> = ({ property, onView, onEdit, o
           </div>
           <div className="property-details-right">
             <p className="property-price">{property.price.toLocaleString()} €</p>
+            <span className={`status-badge ${property.status}`}>
+              {getStatusIcon(property.status)}
+              {getStatusText(property.status)}
+            </span>
           </div>
         </div>
         <div className="property-actions">

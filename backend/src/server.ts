@@ -1,6 +1,10 @@
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
+import multipart from '@fastify/multipart';
+import staticFiles from '@fastify/static';
 import { propertyRoutes } from './routes/propertyRoutes';
+import { uploadRoutes } from './routes/uploadRoutes';
+import * as path from 'path';
 
 const fastify = Fastify({
   logger: true
@@ -13,8 +17,18 @@ const start = async () => {
       methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
     });
 
+    // Register multipart for file uploads
+    await fastify.register(multipart);
+
+    // Register static file serving for uploads
+    await fastify.register(staticFiles, {
+      root: path.join(__dirname, '../uploads'),
+      prefix: '/uploads/',
+    });
+
     // Enregistrement des routes
     await fastify.register(propertyRoutes);
+    await fastify.register(uploadRoutes);
 
     // Démarrage du serveur
     const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;

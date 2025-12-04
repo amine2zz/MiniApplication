@@ -1,13 +1,17 @@
 [
   {
     "id": "1c5e81d3-4930-4c37-bf1b-3ccc1b46d0b6",
-    "title": "Appartement moderne centre-ville",
+    "title": "Appartement centre-ville",
     "city": "Paris",
     "price": 450000,
     "surface": 65,
     "type": "sale",
     "status": "rented",
-    "category": "apartment"
+    "category": "apartment",
+    "images": [
+      "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1480&q=80"
+    ]
   },
   {
     "id": "8657b08b-32e4-4a99-87d6-182c7e5232e0",
@@ -17,7 +21,12 @@
     "surface": 120,
     "type": "sale",
     "status": "available",
-    "category": "house"
+    "category": "house",
+    "images": [
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    ]
   },
   {
     "id": "a25fd771-44ca-4d4b-818d-c87546b0e4e3",
@@ -27,17 +36,26 @@
     "surface": 200,
     "type": "sale",
     "status": "sold",
-    "category": "apartment"
+    "category": "apartment",
+    "images": [
+      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1453&q=80",
+      "https://images.unsplash.com/photo-1600566752355-35792bedcfea?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1475&q=80"
+    ]
   },
   {
     "id": "bda74ebb-50ea-406c-92ad-beee5e78cc84",
-    "title": "Bureau moderne2",
+    "title": "Bureau moderne",
     "city": "Bordeaux",
     "price": 7000,
     "surface": 90,
     "type": "rent",
     "status": "rented",
-    "category": "office"
+    "category": "office",
+    "images": [
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+    ]
   },
   {
     "id": "05eff107-935b-49b5-b2e4-623c6684f447",
@@ -47,7 +65,13 @@
     "surface": 110,
     "type": "sale",
     "status": "available",
-    "category": "apartment"
+    "category": "apartment",
+    "images": [
+      "https://images.unsplash.com/photo-1502672023488-70e25813eb80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1464&q=80",
+      "https://images.unsplash.com/photo-1493809842364-78817add7ffb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1554995207-c18c203602cb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1458&q=80"
+    ]
   },
   {
     "id": "cf123c96-4d38-439d-9a24-e6a93f781ff0",
@@ -57,6 +81,36 @@
     "surface": 150,
     "type": "sale",
     "status": "available",
-    "category": "apartment"
+    "category": "apartment",
+    "images": [
+      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80",
+      "https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+    ]
+  },
+  {
+    "id": "ee983b4d-587e-4e4e-952d-6a455a50c15a",
+    "title": "Property 2",
+    "city": "Amiens",
+    "price": 65000,
+    "surface": 55,
+    "type": "rent",
+    "category": "house",
+    "images": [],
+    "status": "available"
+  },
+  {
+    "id": "04d14e9f-a2d6-426b-9915-955854025249",
+    "title": "Property 1",
+    "city": "Amiens",
+    "price": 50000,
+    "surface": 80,
+    "type": "sale",
+    "category": "apartment",
+    "images": [
+      "http://localhost:3001/uploads/1764848795021-epekrl.png",
+      "http://localhost:3001/uploads/1764848801060-0el2c.png",
+      "http://localhost:3001/uploads/1764850346136-1pb0sb.png"
+    ],
+    "status": "available"
   }
 ]

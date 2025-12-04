@@ -80,11 +80,11 @@ const PropertyFormPage: React.FC<PropertyFormPageProps> = ({ language }) => {
 
       if (isEditing && property) {
         await propertyApi.update(property.id, data as UpdatePropertyDTO);
+        navigate(`/property/${property.id}`);
       } else {
-        await propertyApi.create(data as CreatePropertyDTO);
+        const newProperty = await propertyApi.create(data as CreatePropertyDTO);
+        navigate(`/property/${newProperty.id}`);
       }
-
-      navigate('/', { state: { preserveViewMode: true } });
     } catch (err) {
       setError(t.saveError);
       console.error('Error saving property:', err);
@@ -94,7 +94,11 @@ const PropertyFormPage: React.FC<PropertyFormPageProps> = ({ language }) => {
   };
 
   const handleCancel = () => {
-    navigate('/', { state: { preserveViewMode: true } });
+    if (isEditing && property) {
+      navigate(`/property/${property.id}`);
+    } else {
+      navigate('/');
+    }
   };
 
   if (loading) {

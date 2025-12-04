@@ -26,6 +26,7 @@ export interface Property {
   type: PropertyType;
   status: PropertyStatus;
   category: PropertyCategory;
+  images: string[];
 }
 
 export interface CreatePropertyDTO {
@@ -35,6 +36,7 @@ export interface CreatePropertyDTO {
   surface: number;
   type: PropertyType;
   category: PropertyCategory;
+  images?: string[];
 }
 
 export interface UpdatePropertyDTO {
@@ -45,4 +47,5 @@ export interface UpdatePropertyDTO {
   type?: PropertyType;
   category?: PropertyCategory;
   status?: PropertyStatus;
+  images?: string[];
 }

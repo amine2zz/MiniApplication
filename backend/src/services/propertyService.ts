@@ -10,7 +10,13 @@ class PropertyService implements IPropertyService {
   private loadProperties(): Property[] {
     try {
       const data = fs.readFileSync(this.dataPath, 'utf8');
-      return JSON.parse(data);
+      const properties = JSON.parse(data);
+      
+      // Migrate properties to include images array if not present
+      return properties.map((property: any) => ({
+        ...property,
+        images: property.images || []
+      }));
     } catch {
       return [];
     }
@@ -34,7 +40,8 @@ class PropertyService implements IPropertyService {
     const newProperty: Property = {
       id: uuidv4(),
       ...propertyData,
-      status: PropertyStatus.AVAILABLE
+      status: PropertyStatus.AVAILABLE,
+      images: propertyData.images || []
     };
     properties.push(newProperty);
     this.saveProperties(properties);

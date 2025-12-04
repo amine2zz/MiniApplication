@@ -7,7 +7,8 @@ export const createPropertySchema = z.object({
   price: z.number().positive('Le prix doit être positif'),
   surface: z.number().positive('La surface doit être positive'),
   type: z.nativeEnum(PropertyType, 'Le type est requis'),
-  category: z.nativeEnum(PropertyCategory, 'La catégorie est requise')
+  category: z.nativeEnum(PropertyCategory, 'La catégorie est requise'),
+  images: z.array(z.string().url('URL d\'image invalide')).max(5, 'Maximum 5 images autorisées').optional()
 });
 
 export const updatePropertySchema = z.object({
@@ -17,7 +18,8 @@ export const updatePropertySchema = z.object({
   surface: z.number().positive().optional(),
   type: z.nativeEnum(PropertyType).optional(),
   category: z.nativeEnum(PropertyCategory).optional(),
-  status: z.nativeEnum(PropertyStatus).optional()
+  status: z.nativeEnum(PropertyStatus).optional(),
+  images: z.array(z.string().url('URL d\'image invalide')).max(5, 'Maximum 5 images autorisées').optional()
 });
 
 export const propertyParamsSchema = z.object({

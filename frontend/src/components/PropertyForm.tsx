@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Property, CreatePropertyDTO, UpdatePropertyDTO, PropertyType, PropertyCategory, PropertyStatus, FRENCH_CITIES_LIST } from '../types/Property';
+import ImageGallery from './ImageGallery';
 import './PropertyForm.css';
 
 interface PropertyFormProps {
@@ -47,7 +48,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       studio: 'Studio',
       available: 'Disponible',
       sold: 'Vendu',
-      rented: 'Loué'
+      rented: 'Loué',
+      images: 'Images'
     },
     en: {
       editTitle: 'Edit property',
@@ -78,7 +80,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       studio: 'Studio',
       available: 'Available',
       sold: 'Sold',
-      rented: 'Rented'
+      rented: 'Rented',
+      images: 'Images'
     }
   };
 
@@ -90,7 +93,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
     surface: '',
     type: PropertyType.SALE,
     category: PropertyCategory.APARTMENT,
-    status: PropertyStatus.AVAILABLE
+    status: PropertyStatus.AVAILABLE,
+    images: [] as string[]
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -104,7 +108,8 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
         surface: property.surface.toString(),
         type: property.type,
         category: property.category,
-        status: property.status
+        status: property.status,
+        images: property.images || []
       });
     }
   }, [property]);
@@ -158,6 +163,7 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
       surface: parseFloat(formData.surface),
       type: formData.type,
       category: formData.category,
+      images: formData.images,
       ...(property && { status: formData.status })
     };
 
@@ -178,6 +184,13 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
         [name]: ''
       }));
     }
+  };
+
+  const handleImagesChange = (images: string[]) => {
+    setFormData(prev => ({
+      ...prev,
+      images
+    }));
   };
 
   return (
@@ -305,6 +318,16 @@ const PropertyForm: React.FC<PropertyFormProps> = ({
             </select>
           </div>
         )}
+
+        <div className="form-group">
+          <label className="form-label">{t.images}</label>
+          <ImageGallery 
+            images={formData.images}
+            canEdit={true}
+            onImagesChange={handleImagesChange}
+            language={language}
+          />
+        </div>
 
         <div className="form-actions">
           <button

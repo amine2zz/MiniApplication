@@ -14,11 +14,11 @@ export const getCategoryIcon = (category: PropertyCategory) => {
 
 export const getStatusIcon = (status: PropertyStatus) => {
   const icons = {
-    [PropertyStatus.AVAILABLE]: <i className="fas fa-check-circle status-icon-blue"></i>,
-    [PropertyStatus.SOLD]: <i className="fas fa-lock status-icon-blue"></i>,
-    [PropertyStatus.RENTED]: <i className="fas fa-home status-icon-blue"></i>
+    [PropertyStatus.AVAILABLE]: <i className="fas fa-check-circle" style={{ color: 'white', marginRight: '4px' }}></i>,
+    [PropertyStatus.SOLD]: <i className="fas fa-lock" style={{ color: 'white', marginRight: '4px' }}></i>,
+    [PropertyStatus.RENTED]: <i className="fas fa-home" style={{ color: 'white', marginRight: '4px' }}></i>
   };
-  return icons[status] || <i className="fas fa-check-circle status-icon-blue"></i>;
+  return icons[status] || <i className="fas fa-check-circle" style={{ color: 'white', marginRight: '4px' }}></i>;
 };
 
 export const getCategoryIconFilter = (category: string) => {
@@ -34,9 +34,9 @@ export const getCategoryIconFilter = (category: string) => {
 
 export const getStatusIconFilter = (status: string) => {
   const icons = {
-    available: <i className="fas fa-check-circle status-icon-blue"></i>,
-    sold: <i className="fas fa-lock status-icon-blue"></i>,
-    rented: <i className="fas fa-home status-icon-blue"></i>
+    available: <i className="fas fa-check-circle" style={{ color: 'white', marginRight: '4px' }}></i>,
+    sold: <i className="fas fa-lock" style={{ color: 'white', marginRight: '4px' }}></i>,
+    rented: <i className="fas fa-home" style={{ color: 'white', marginRight: '4px' }}></i>
   };
-  return icons[status as keyof typeof icons] || <i className="fas fa-check-circle status-icon-blue"></i>;
+  return icons[status as keyof typeof icons] || <i className="fas fa-check-circle" style={{ color: 'white', marginRight: '4px' }}></i>;
 };

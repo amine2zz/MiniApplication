@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Property, PropertyCategory, PropertyStatus, PropertyType } from '../types/Property';
-import { getCategoryIcon, getStatusIcon } from '../utils/icons';
+import { getCategoryIcon } from '../utils/icons';
 import { propertyApi } from '../services/api';
+import ImageGallery from '../components/ImageGallery';
 import './PropertyDetail.css';
 
 interface PropertyDetailProps {
@@ -182,7 +183,6 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
           <div className="property-header">
             <div className="property-badge">{t.detail}</div>
             <div className="title-section">
-              <span className="category-icon">{getCategoryIcon(property.category)}</span>
               <h1 className="property-title">{property.title}</h1>
               <span 
                 className="status-badge" 
@@ -192,6 +192,12 @@ const PropertyDetail: React.FC<PropertyDetailProps> = ({ language }) => {
               </span>
             </div>
           </div>
+
+          <ImageGallery 
+            images={property.images || []}
+            canEdit={false}
+            language={language}
+          />
 
           <div className="property-info-grid">
             <div className="info-item">
