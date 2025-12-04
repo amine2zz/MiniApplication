@@ -53,8 +53,8 @@
     "status": "rented",
     "category": "office",
     "images": [
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
-      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
+      "https://images.unsplash.com/photo-1497366754035-f200968a6e72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80",
+      "https://images.unsplash.com/photo-1497366216548-37526070297c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80"
     ]
   },
   {
@@ -110,6 +110,21 @@
       "http://localhost:3001/uploads/1764848795021-epekrl.png",
       "http://localhost:3001/uploads/1764848801060-0el2c.png",
       "http://localhost:3001/uploads/1764850346136-1pb0sb.png"
+    ],
+    "status": "available"
+  },
+  {
+    "id": "d7bf09e3-faa3-4305-a5cb-39bec22bb545",
+    "title": "Property 3",
+    "city": "Rennes",
+    "price": 500000,
+    "surface": 71,
+    "type": "rent",
+    "category": "office",
+    "images": [
+      "http://localhost:3001/uploads/1764852060580-syq9um.png",
+      "http://localhost:3001/uploads/1764852067448-whwlsw.png",
+      "http://localhost:3001/uploads/1764852075439-cdie5f.png"
     ],
     "status": "available"
   }
